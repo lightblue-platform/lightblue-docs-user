@@ -7,4 +7,5 @@
 * [REST Specification: General](rest_specification_general/README.md)
 * [REST Specification: Metadata](rest_specification_metadata/README.md)
 * [REST Specification: Data](rest_specification_data/README.md)
+* [Versioning Standard](versioning_standard/README.md)
 
