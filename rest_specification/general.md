@@ -25,7 +25,7 @@ In order to have a consistent way of extracting metadata from a request we have 
     * Property = httpheader.entityversion
 
 ## Error Response Object
-See [error JSON-schema](https://raw.github.com/bserdar/lightblue/master/query-api/src/main/resources/json-schema/error/error.json) for details.
+See [error JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/query-api/src/main/resources/json-schema/error/error.json) for details.
 
 Each response section for documenting errors will include mention of the expected error codes only.  The fields are:
 * object_type is always "error"
