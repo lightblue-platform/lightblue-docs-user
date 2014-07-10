@@ -13,12 +13,16 @@ to create the schema before trying to insert any data (the project require a def
 any data be inserted, so it DOESN'T create schema automatically based on the insert).
 
 ### Request
-One or two path params on the request representing the entity name and version. Version is optional, and the default version of the entity is used if ommitted. Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
 
+Insert new data for given entity and specific version.
 ```
 PUT /data/{entityName}/{version}
 {request JSON document}
 ```
+---
+
+Insert new data for given entity in the default version.
 ```
 PUT /data/{entityName}
 {request JSON document}
@@ -77,17 +81,20 @@ PUT /data/insert/country/1.0.0
 Replace the contents of the given documents with new data.  See [Save](../language_specification/data.md#save) in the Language Spec for details of the document posted.
 
 ### Request
-One or two path params on the request representing the entity name and version. Version is optional, and the default version of the entity is used if ommitted. Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
 
-```
-POST /data/save/{entityName}
-{request JSON document}
-```
+Save data for given entity and specific version.
 ```
 POST /data/save/{entityName}/{version}
 {request JSON document}
 ```
+---
 
+Save data for given entity using default version.
+```
+POST /data/save/{entityName}
+{request JSON document}
+```
 
 ### Response: Success
 On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/response.json).
@@ -102,14 +109,18 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 Update subset of documents based on the given query.  See [Update](../language_specification/data.md#update) in the Language Spec for details of the document posted.
 
 ### Request
-One or two path params on the request representing the entity name and version. Version is optional, and the default version of the entity is used if ommitted. Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
 
-```
-POST /data/update/{entityName}
-{request JSON document}
-```
+Update data for given entity and specific version.
 ```
 POST /data/update/{entityName}/{version}
+{request JSON document}
+```
+---
+
+Update data for given entity using default version.
+```
+POST /data/update/{entityName}
 {request JSON document}
 ```
 
@@ -127,14 +138,18 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 Delete documents based on the given query.  See [[Delete|Language-Spec-Data#wiki-delete]] in the Language Spec for details of the document posted.
 
 ### Request
-One or two path params on the request representing the entity name and version. Version is optional, and the default version of the entity is used if ommitted. Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
 
-```
-POST /data/delete/{entityName}
-{request JSON document}
-```
+Delete data for given entity and specific version.
 ```
 POST /data/delete/{entityName}/{version}
+{request JSON document}
+```
+---
+
+Delete data for given entity using default version.
+```
+POST /data/delete/{entityName}
 {request JSON document}
 ```
 
@@ -187,14 +202,18 @@ If from is not given, result set starts from 0. If to is not given, all results 
 Find documents based on the given query.  See [Find](../language_specification/data.md#find) in the Language Spec for details of the document posted.  Note that if caller requests a field they are not authroized to access the request will not fail.  Instead the field will simply not be returned in the response.
 
 ### Request
-One or two path params on the request representing the entity name and version. Version is optional, and the default version of the entity is used if ommitted. Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
 
-```
-POST /data/find/{entityName}
-{request JSON document}
-```
+Find data for given entity and version.
 ```
 POST /data/find/{entityName}/{version}
+{request JSON document}
+```
+---
+
+Find data for given entity using default version.
+```
+POST /data/find/{entityName}
 {request JSON document}
 ```
 

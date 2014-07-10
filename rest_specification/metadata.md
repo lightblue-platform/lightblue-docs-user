@@ -10,19 +10,24 @@
 Get a "graph" of dependencies between entities.  Default versions are used unless a specific entity with version is requested.  If no version is specified and the entity has no default version the dependencies are not returned for that entity.
 
 ### Request
-
-```
-GET /metadata/dependencies
-```
-```
-GET /metadata/{entityName}/dependencies
-```
+Get dependencies for:
+* entityName - the name of entity
+* version - the specific version
 ```
 GET /metadata/{entityName}/{version}/dependencies
 ```
+---
 
-If no entityName or version is given, all entities are processed with default versions. If only entityName is given, default version of that entity is processed.
+Get dependencies for entity with default versions.
+```
+GET /metadata/{entityName}/dependencies
+```
+---
 
+Get dependencies for all entities with default versions.
+```
+GET /metadata/dependencies
+```
 ### Response: Success
 Returns an array of objects that follow this JSON structure.  Note there is no JSON-schema for this at this time, subject to change.
 ```
@@ -66,21 +71,22 @@ Additional error codes:
 Get list of all roles and the entities they allow access to.  See Request for details
 
 ### Request
-```
-GET /metadata/roles
-```
-```
-GET /metadata/{entityName}/roles
-```
+Get all roles for given entity name and specific version.
 ```
 GET /metadata/{entityName}/{version}/roles
 ```
+---
 
-If neither entityName nor version is specified, the request is for all roles for the default version of all entities.
-If only entityName is specified the request is for all roles for the default version of that entity.
-If both entityName and version are specified the request is for all roles for that specific version of the entity.
-Note: Only when the specific version is informed the default version wouldn't be used. And in those case which the default version is used and the entity doesn't defined any, this method willinform an error about this entity.
+Get all roles for given entity name and default version.  If entity doesn't have a default vesrion an error is returned.
+```
+GET /metadata/{entityName}/roles
+```
+---
 
+Get all roles for all entities with default version.  If entity doesn't have a default version an error is returned for that entity.
+```
+GET /metadata/roles
+```
 
 ### Response: Success
 Returns an array of objects that follow this JSON structure.  Note there is no JSON-schema for this at this time, subject to change.
@@ -137,12 +143,15 @@ Additional error codes:
 Get names of all defined entities.  There is no paging for this request, all entity names are returned in one response.
 
 ### Request
-Optional parameters specify entities with specific schema states to be returned.
-```
-GET /metadata
-```
+Get all entity names with schemas in the given status list.  List is a comma separate lis of: active, deprecated, and/or disabled.
 ```
 GET /metadata/s={comma separated status list (active, deprecated, disabled)}
+```
+---
+
+Get all entity names.
+```
+GET /metadata
 ```
 
 ### Response: Success
@@ -264,7 +273,6 @@ Update the status of a a version of an entity.  For example, to disable an old v
 
 ### Request
 Three path params to represent entity name, version, and new status. Optional change comment can be provided as a query param.
-
 ```
 PUT /metadata/{entityName}/{version}/{status}?comment={Change comment}
 ```
@@ -325,7 +333,6 @@ Update the status of a a version of an entity.  For example, to disable an old v
 
 ### Request
 Three path params to represent entity name, version, and new status. Optional change comment can be provided as a query param.
-
 ```
 PUT /metadata/{entityName}/{version}/{status}?comment={Change comment}
 ```
@@ -348,7 +355,6 @@ Update the status of a a version of an entity.  For example, to disable an old v
 
 ### Request
 Three path params to represent entity name, version, and new status. Optional change comment can be provided as a query param.
-
 ```
 PUT /metadata/{entityName}/{version}/{status}?comment={Change comment}
 ```
@@ -389,7 +395,7 @@ Additional error codes:
 Remove an entity if all its versions are disabled.
 
 ### Request
-
+Delete given entity.
 ```
 DELETE /metadata/{entityName}
 ```

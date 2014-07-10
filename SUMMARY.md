@@ -9,6 +9,6 @@
    * [General](rest_specification/general.md)
    * [Metadata](rest_specification/metadata.md)
    * [Data](rest_specification/data.md)
-* [Standards](standards/README)
+* [Standards](standards/README.md)
    * [Versioning](standards/versioning.md)
 
