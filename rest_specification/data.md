@@ -15,11 +15,14 @@ any data be inserted, so it DOESN'T create schema automatically based on the ins
 ### Request
 One or two path params on the request representing the entity name and version. Version is optional, and the default version of the entity is used if ommitted. Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
 
-> PUT /data/{entityName}/{version}<br/>
-> {request JSON document}
->
-> PUT /data/{entityName}<br/>
-> {request JSON document}
+```
+PUT /data/{entityName}/{version}
+{request JSON document}
+```
+```
+PUT /data/{entityName}
+{request JSON document}
+```
 
 ### Response: Success
 On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/response.json).
@@ -76,10 +79,14 @@ Replace the contents of the given documents with new data.  See [Save](../langua
 ### Request
 One or two path params on the request representing the entity name and version. Version is optional, and the default version of the entity is used if ommitted. Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
 
-> POST /data/save/{entityName}<br/>
-> {request JSON document}<br/>
-> POST /data/save/{entityName}/{version}<br/>
-> {request JSON document}
+```
+POST /data/save/{entityName}
+{request JSON document}
+```
+```
+POST /data/save/{entityName}/{version}
+{request JSON document}
+```
 
 
 ### Response: Success
@@ -97,10 +104,14 @@ Update subset of documents based on the given query.  See [Update](../language_s
 ### Request
 One or two path params on the request representing the entity name and version. Version is optional, and the default version of the entity is used if ommitted. Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
 
-> POST /data/update/{entityName}<br/>
-> {request JSON document}<br/>
-> POST /data/update/{entityName}/{version}<br/>
-> {request JSON document}
+```
+POST /data/update/{entityName}
+{request JSON document}
+```
+```
+POST /data/update/{entityName}/{version}
+{request JSON document}
+```
 
 ### Response: Success
 On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/response.json).
@@ -118,10 +129,14 @@ Delete documents based on the given query.  See [[Delete|Language-Spec-Data#wiki
 ### Request
 One or two path params on the request representing the entity name and version. Version is optional, and the default version of the entity is used if ommitted. Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
 
-> POST /data/delete/{entityName}<br/>
-> {request JSON document}<br/>
-> POST /data/delete/{entityName}/{version}<br/>
-> {request JSON document}
+```
+POST /data/delete/{entityName}
+{request JSON document}
+```
+```
+POST /data/delete/{entityName}/{version}
+{request JSON document}
+```
 
 ### Response: Success
 On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/response.json).
@@ -134,8 +149,12 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 
 A simplified find API that takes just query parameters to do a simple search.
 
-> GET /data/{entity}?Q&P&S&R<br/>
-> GET /data/{entity}/{version}?Q&P&S&R
+```
+GET /data/{entity}?Q&P&S&R
+```
+```
+GET /data/{entity}/{version}?Q&P&S&R
+```
 
 where Q represents the query, P represents the projection, S represents the sort expressions, and R is the range.
 
@@ -170,10 +189,14 @@ Find documents based on the given query.  See [Find](../language_specification/d
 ### Request
 One or two path params on the request representing the entity name and version. Version is optional, and the default version of the entity is used if ommitted. Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
 
-> POST /data/find/{entityName}<br/>
-> {request JSON document}<br/>
-> POST /data/find/{entityName}/{version}<br/>
-> {request JSON document}
+```
+POST /data/find/{entityName}
+{request JSON document}
+```
+```
+POST /data/find/{entityName}/{version}
+{request JSON document}
+```
 
 ### Response: Success
 On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/response.json).

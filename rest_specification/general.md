@@ -37,9 +37,11 @@ There are some common error codes that could be returned on any request and they
 * metadata:ConfigurationNotValid - configuration for the metadata manager is not valid
 * rest-metadata:RestError - generic error when no other specific error can be determined
 
+```
     {
         "object_type": "error",
         "context": "error/context/path",
         "errorCode": "DESCRIPTIVE_ERROR_CODE",
         "msg": "User friendly error message."
     }
+```

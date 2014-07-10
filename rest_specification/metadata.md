@@ -11,9 +11,15 @@ Get a "graph" of dependencies between entities.  Default versions are used unles
 
 ### Request
 
-> GET /metadata/dependencies<br/>
-> GET /metadata/{entityName}/dependencies<br/>
-> GET /metadata/{entityName}/{version}/dependencies
+```
+GET /metadata/dependencies
+```
+```
+GET /metadata/{entityName}/dependencies
+```
+```
+GET /metadata/{entityName}/{version}/dependencies
+```
 
 If no entityName or version is given, all entities are processed with default versions. If only entityName is given, default version of that entity is processed.
 
@@ -27,6 +33,7 @@ Returns an array of objects that follow this JSON structure.  Note there is no J
     }
 ]
 ```
+
 #### Example: cyclic
 ```
 [
@@ -59,10 +66,15 @@ Additional error codes:
 Get list of all roles and the entities they allow access to.  See Request for details
 
 ### Request
-
-> GET /metadata/roles<br/>
-> GET /metadata/{entityName}/roles<br/>
-> GET /metadata/{entityName}/{version}/roles
+```
+GET /metadata/roles
+```
+```
+GET /metadata/{entityName}/roles
+```
+```
+GET /metadata/{entityName}/{version}/roles
+```
 
 If neither entityName nor version is specified, the request is for all roles for the default version of all entities.
 If only entityName is specified the request is for all roles for the default version of that entity.
@@ -126,8 +138,12 @@ Get names of all defined entities.  There is no paging for this request, all ent
 
 ### Request
 Optional parameters specify entities with specific schema states to be returned.
-> GET /metadata<br/>
-> GET /metadata/s={comma separated status list (active, deprecated, disabled)}
+```
+GET /metadata
+```
+```
+GET /metadata/s={comma separated status list (active, deprecated, disabled)}
+```
 
 ### Response: Success
 JSON document that is an array of strings.  Each element in the array is an entity name.
@@ -137,7 +153,9 @@ Get a list of all available versions of a given entity.
 
 ### Request
 One parameter as a path param of the request.
-> GET /metadata/{entityName}
+```
+GET /metadata/{entityName}
+```
 
 ### Response: Success
 JSON document that is an array of version information objects.
@@ -162,7 +180,9 @@ Get metadata details for the specified version of an entity.
 
 ### Request
 Two path parameters on the request.
-> GET /metadata/{entityName}/{version}
+```
+GET /metadata/{entityName}/{version}
+```
 
 ### Response: Success
 If the requested version of the entity exists a JSON document matching the [metadata JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json) is returned.
@@ -180,8 +200,10 @@ Create a new entity by defining a new metadata.
 ### Request
 Two path params on the request representing the entity name and version.
 Body of request is a JSON document matching the [metadata JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json)
-> PUT /metadata/{entityName}/{version}<br/>
-> {metadata JSON document}
+```
+PUT /metadata/{entityName}/{version}
+{metadata JSON document}
+```
 
 ### Response: Success
 On success returns the stored metadata document for the newly created version of the entity.
@@ -201,8 +223,10 @@ Create a new schema, representing a new version of an existing entity.
 ### Request
 Two path params on the request representing the entity name and version.
 Body of request is a JSON document matching the [schema JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/schema.json)
-> PUT /metadata/{entityName}/schema={version}<br/>
-> {schema JSON document}
+```
+PUT /metadata/{entityName}/schema={version}
+{schema JSON document}
+```
 
 ### Response: Success
 On success returns the [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json) for the newly created version of the entity.  Note that this is *not* the schema JSON document, it is the metadata JSON document (entity info + schema).
@@ -221,8 +245,10 @@ Create an existing entity's info.
 ### Request
 One path param on the request representing the entity name.
 Body of request is a JSON document matching the [enttyInfo JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/entityInfo.json)
-> PUT /metadata/{entityName}<br/>
-> {entityInfo JSON document}
+```
+PUT /metadata/{entityName}
+{entityInfo JSON document}
+```
 
 ### Response: Success
 On success returns the [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json) with the default version for the given entity.  Note that this is *not* the entityInfo JSON document, it is the metadata JSON document (entity info + schema).
@@ -239,7 +265,9 @@ Update the status of a a version of an entity.  For example, to disable an old v
 ### Request
 Three path params to represent entity name, version, and new status. Optional change comment can be provided as a query param.
 
-> PUT /metadata/{entityName}/{version}/{status}?comment={Change comment}<br/>
+```
+PUT /metadata/{entityName}/{version}/{status}?comment={Change comment}
+```
 
 Values for {status} are defined in the [schema JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/schema.json), see #definitions/status/properties/value/enum.
 
@@ -259,7 +287,9 @@ Clear the default version for the given entity
 
 ### Request
 One path param to represent entity name
-> DELETE /metadata/{entityName}/default
+```
+DELETE /metadata/{entityName}/default
+```
 
 ### Response: Success
 The [entityInfo JSON document](https://github.com/lightblue-platform/lightblue/wiki/Language-Spec-Metadata#entity-info) for the given entity name.
@@ -276,7 +306,9 @@ Set the default version for the given entity to the specified version.
 
 ### Request
 Two path params to represent entity name and version.
-> POST /metadata/{entityName}/{version}/default
+```
+POST /metadata/{entityName}/{version}/default
+```
 
 ### Response: Success
 The [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json) for the given entity name and version.
@@ -294,7 +326,9 @@ Update the status of a a version of an entity.  For example, to disable an old v
 ### Request
 Three path params to represent entity name, version, and new status. Optional change comment can be provided as a query param.
 
-> PUT /metadata/{entityName}/{version}/{status}?comment={Change comment}<br/>
+```
+PUT /metadata/{entityName}/{version}/{status}?comment={Change comment}
+```
 
 Values for {status} are defined in the [schema JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/schema.json), see #definitions/status/properties/value/enum.
 
@@ -315,7 +349,9 @@ Update the status of a a version of an entity.  For example, to disable an old v
 ### Request
 Three path params to represent entity name, version, and new status. Optional change comment can be provided as a query param.
 
-> PUT /metadata/{entityName}/{version}/{status}?comment={Change comment}<br/>
+```
+PUT /metadata/{entityName}/{version}/{status}?comment={Change comment}
+```
 
 Values for {status} are defined in the [schema JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/schema.json), see #definitions/status/properties/value/enum.
 
@@ -335,7 +371,9 @@ Set the default version for the given entity to the specified version.
 
 ### Request
 Two path params to represent entity name and version.
-> POST /metadata/{entityName}/{version}/default
+```
+POST /metadata/{entityName}/{version}/default
+```
 
 ### Response: Success
 The [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json) for the given entity name and version.
@@ -352,7 +390,9 @@ Remove an entity if all its versions are disabled.
 
 ### Request
 
-> DELETE /metadata/{entityName}
+```
+DELETE /metadata/{entityName}
+```
 
 ### Response: Success
 Empty string

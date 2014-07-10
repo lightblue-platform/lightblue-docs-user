@@ -315,7 +315,7 @@ Select all elements of "x.y.*.z" that are greater than 5.
 Select all elements of "x.y.*.z" where the field 'w' is
 equal to the top-level field 'k'.
 
-$update specifies how each matching array element will be updated.
+```$update``` specifies how each matching array element will be updated.
 The update expression itself may contain a $foreach.
 
 Example:
@@ -338,5 +338,5 @@ Set field 'k' in matching elements to 'blah' (".k" means
 
            "$update" : { "$set" : { "$this.v" : { "$valueof":"k"}}}}}}}
 ```
-For each element of x.y.*.z where x.y.*.z.arr.p=1 set x.y.*.z.arr.v
-to the value of k (k is from root of doc) .
+For each element of ```x.y.*.z``` where ```x.y.*.z.arr.p=1``` set ```x.y.*.z.arr.v```
+to the value of ```k``` (k is from root of doc) .
