@@ -81,13 +81,13 @@ Request object:
 {
   <common stuff>
   data: [ <entityData> ]
-  returning : <projection>
+  projection : <projection>
 }
 ```
 * data: Array of entity objects
   * If object ids are given, entities will be inserted
     with the given object id, otherwise object id will be auto-generated
-* returning: A projection expression specifying what fields of entities
+* projection: A projection expression specifying what fields of entities
   to return once the insertion is performed.
 
 ### Save
@@ -100,7 +100,7 @@ Request object:
   <common stuff>
   data: [ <entityData> ],
   upsert: boolean
-  returning : <projection>
+  projection : <projection>
 }
 ```
 * data: Array of entity objects
@@ -110,7 +110,7 @@ Request object:
     error is returned.
 * upsert: If true, inserts the doc if not found, or if the doc
   doesn't have id
-* returning: A projection expression specifying what fields of updated
+* projection: A projection expression specifying what fields of updated
   entities to return
 
 ### Update
@@ -123,12 +123,12 @@ Request object:
   <common stuff>,
   query: <query_expression,
   update: <update_expression>
-  returning : <projection>
+  projection : <projection>
 }
 ```
 * query: A query expression determining which documents to update
 * update: update expression
-* returning: A projection expression specifying what fields of updated
+* projection: A projection expression specifying what fields of updated
   entities to return
 
 ### Delete
@@ -148,13 +148,13 @@ Request object:
 {
   <common stuff>
   query: <query_expression>,
-  returning: <projection>,
+  projection: <projection>,
   sort: <sort>,
   range: [ from, to ]
 }
 ```
 * query: A non-empty query expression
-* returning: A non-empty projection expression specifying what to return
+* projection: A non-empty projection expression specifying what to return
 * sort: Optional sort specification
 * range: Optional range, inclusive range of results to return.
   If sort is not given, the results will be returned in an
