@@ -1,4 +1,4 @@
-# Language Specification: Data
+# Data
 
 ## Data APIs
 

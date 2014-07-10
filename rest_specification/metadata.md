@@ -1,4 +1,4 @@
-# REST Specification: Metadata
+# Metadata
 
 * Descriptive name is the Header
 * First paragraph is a short description of the API

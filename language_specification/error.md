@@ -1,4 +1,4 @@
-# Language Specification: Error
+# Error
 
 All errors are reported using the following error object:
 ```

@@ -1,4 +1,4 @@
-# Language Specification: Metadata
+# Metadata
 
 ## Entity Metadata
 Entity metadata are stored in a collection named "metadata". Format of metadata is:

@@ -1,4 +1,4 @@
-# REST Specification: Data
+# Data
 
 * Descriptive name is the Header
 * First paragraph is a short description of the API
@@ -7,7 +7,7 @@
 * Example section contains a successful example and an unsuccessful example.
 
 ## PUT: Insert New Data
-Insert new documents.  See [[Insert|Language-Spec-Data#wiki-insert]] in the Language Spec for
+Insert new documents.  See [Insert]()|Language-Spec-Data#wiki-insert]] in the Language Spec for
 details of the document posted. Also look at [[Metada page|Rest-Spec-Metadata#rest-spec-metadata]]
 to create the schema before trying to insert any data (the project require a defined schema before
 any data be inserted, so it DOESN'T create schema automatically based on the insert).

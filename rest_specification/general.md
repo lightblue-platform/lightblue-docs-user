@@ -1,4 +1,4 @@
-# REST Specification: General
+# General
 
 ## Authentication
 Authentication is not the responsibility of lightblue.  Any request that calls a REST application is assumed to be authenticated.  This means something like the container or a local proxy (httpd) is intercepting all requests and verifying authentication before passing the request on.  Examples of how to do this may be added to this document later.

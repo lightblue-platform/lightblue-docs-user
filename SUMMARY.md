@@ -1,11 +1,14 @@
 # Summary
 
-* [Language Specification: Metadata](language_specification_metadata/README.md)
-* [Language Specification: Data](language_specification_data/README.md)
-* [Language Specification: Query](language_specification_query/README.md)
-* [Language Specification: Error](language_specification_error/README.md)
-* [REST Specification: General](rest_specification_general/README.md)
-* [REST Specification: Metadata](rest_specification_metadata/README.md)
-* [REST Specification: Data](rest_specification_data/README.md)
-* [Versioning Standard](versioning_standard/README.md)
+* [Language Specification](language_specification/README.md)
+   * [Metadata](language_specification/metadata.md)
+   * [Data](language_specification/data.md)
+   * [Query](language_specification/query.md)
+   * [Error](language_specification/error.md)
+* [REST Specification](rest_specification/README.md)
+   * [General](rest_specification/general.md)
+   * [Metadata](rest_specification/metadata.md)
+   * [Data](rest_specification/data.md)
+* [Standards](standards/README)
+   * [Versioning](standards/versioning.md)
 

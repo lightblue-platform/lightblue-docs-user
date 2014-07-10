@@ -1,4 +1,4 @@
-# Versioning Standard
+# Versioning
 The metadata service enforces some standards around versioning.  The standard, rational for the standard, and how the standard are enfoced are documented here.
 
 ## Standard: Common
