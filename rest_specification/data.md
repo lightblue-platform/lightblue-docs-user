@@ -7,7 +7,7 @@
 * Example section contains a successful example and an unsuccessful example.
 
 ## PUT: Insert New Data
-Insert new documents.  See [Insert](../language_specification/data.md#insert) in the Language Spec for
+Insert new documents.  See [Insert](../language_specification/data.html#insert) in the Language Spec for
 details of the document posted. Also look at [[Metada page|Rest-Spec-Metadata#rest-spec-metadata]]
 to create the schema before trying to insert any data (the project require a defined schema before
 any data be inserted, so it DOESN'T create schema automatically based on the insert).
@@ -78,7 +78,7 @@ PUT /data/insert/country/1.0.0
 ```
 
 ## POST: Save Existing Entity
-Replace the contents of the given documents with new data.  See [Save](../language_specification/data.md#save) in the Language Spec for details of the document posted.
+Replace the contents of the given documents with new data.  See [Save](../language_specification/data.html#save) in the Language Spec for details of the document posted.
 
 ### Request
 Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
@@ -106,7 +106,7 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 * mongo-crud:SaveError - general error, unable to save document
 
 ## POST: Update Existing Entity
-Update subset of documents based on the given query.  See [Update](../language_specification/data.md#update) in the Language Spec for details of the document posted.
+Update subset of documents based on the given query.  See [Update](../language_specification/data.html#update) in the Language Spec for details of the document posted.
 
 ### Request
 Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
@@ -199,7 +199,7 @@ If from is not given, result set starts from 0. If to is not given, all results 
 
 
 ## POST: Find
-Find documents based on the given query.  See [Find](../language_specification/data.md#find) in the Language Spec for details of the document posted.  Note that if caller requests a field they are not authroized to access the request will not fail.  Instead the field will simply not be returned in the response.
+Find documents based on the given query.  See [Find](../language_specification/data.html#find) in the Language Spec for details of the document posted.  Note that if caller requests a field they are not authroized to access the request will not fail.  Instead the field will simply not be returned in the response.
 
 ### Request
 Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
