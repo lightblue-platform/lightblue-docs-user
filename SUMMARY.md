@@ -5,6 +5,7 @@
    * [Data](language_specification/data.md)
    * [Query](language_specification/query.md)
    * [Error](language_specification/error.md)
+   * [RDBMS](language_specification/rdbms.md)
 * [REST Specification](rest_specification/README.md)
    * [General](rest_specification/general.md)
    * [Metadata](rest_specification/metadata.md)
