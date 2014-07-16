@@ -110,5 +110,45 @@ Conditional statement, describe the logic to be evaluated, what should happen an
 *
 $foreach and $for iterate operators.We can use this field to use each value from the given path. This fields makes a recursive reference to expressions again
 
+Below an example of expression (which can be used on any Lightblue's operations):
+
+```
+ "expressions" : [
+           {
+            "datasource" : "name",
+            "sql" : "SELECT * FROM DUAL",
+            "type" : "select"
+           },
+           {
+            "$if" :
+               {
+                  "$or" : [	{"$path-check-path" : {"path1" : "x", "conditional" : "$greaterThan", "path2" : "y",}},
+				{"$path-check-values" :{"path1" : "z", "conditional" : "$contains", "values2" : ["a","1","3"],}},
+			]
+               },
+            "$then" : "$fail",
+            "$elseIf" : [
+               {
+                "$if" :{"$path-check-path" : {"path1" : "x", "conditional" : "$greaterThan", "path2" : "z",},
+                "$then" :[{ "sql" : "SELECT 5 FROM DUAL","type" : "select"}]
+               },
+            "$else" :[
+		{
+		  "$foreach" :{
+                        "iterateOverPath" :"z",
+                        "expressions" : [{ "sql" : "SELECT z FROM DUAL","type" : "select"}]
+                     }
+		},
+		{
+		  "$for" :{
+                        "loopTimes" : "10",
+                        "loopCounterVariableName" :"i",
+                        "expressions" : [{ "sql" : "SELECT i FROM DUAL","type" : "select"}]
+                     }
+		}
+             ]
+           }
+]
+```
 
 
