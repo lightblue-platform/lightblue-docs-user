@@ -114,10 +114,13 @@ Below an example of expression (which can be used on any Lightblue's operations)
 
 ```
  "expressions" : [
-           {
-            "datasource" : "name",
-            "sql" : "SELECT * FROM DUAL",
-            "type" : "select"
+            {
+            "$statement" :
+               {
+                "datasource" : "name",
+                "sql" : "SELECT * FROM DUAL",
+                "type" : "select"
+                }
            },
            {
             "$if" :
