@@ -108,7 +108,7 @@ This field holds an array of:
 
 
 * `$statement` - SQL statements (insert, delete, select, update, call) with an optional `datasource` to override the default value for the entity.
-* `$if` - conditional statement describing the logic to be evaluated, what should happen, and optional `$elseIf` or `$else`.
+* `$if` / `$then` - conditional statement describing the logic to be evaluated, what should happen, and optional `$elseIf` or `$else`.
 * `$foreach` and `$for` - iteration operators used to operate on each value in a given result.
 
 
