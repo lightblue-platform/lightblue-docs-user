@@ -25,15 +25,15 @@ Attribute indicating the type of entity being represented.  Is important on prop
 ###"properties"
 An object that captures a bag of properties that are top level attributes exposed by the schema.  That means in a json document validated against a schema you can use each of the properties as top level attributes in that document.  You can nest properties inside properties.  In the simplest schema you'll have properties at the top level and each child object defines a single property.  The name of the child object is the name of the property and there are some attributes you can set on the child to control the behavior:
 
-description - a description of the property, can always be present
-enum - an array of strings enumerating a concrete set of values allowed in this property
-type - can be simple types (e.g. "string", "integer") or complex types (e.g. "object", "array")
-format - can further restrict the format of simple types.  I haven't seen this used much, but one is "regex".
-minItems - when type is array, integer value indicates the minimum number of items required.
-maxItems - when type is array, integer value indicates the maximum number of items allowed.
-items - defines the types of contents the array can have.  This can be single object types or multiple.
-oneOf | anyOf | not - value is an array of objects defining what is allowed.  Will be explained with examples in the standards later.
-$ref - value of this attribute is a reference to another schema or subset of a schema.  Will explain in more detail later.
+* description - a description of the property, can always be present
+* enum - an array of strings enumerating a concrete set of values allowed in this property
+* type - can be simple types (e.g. "string", "integer") or complex types (e.g. "object", "array")
+* format - can further restrict the format of simple types.  I haven't seen this used much, but one is "regex".
+* minItems - when type is array, integer value indicates the minimum number of items required.
+* maxItems - when type is array, integer value indicates the maximum number of items allowed.
+* items - defines the types of contents the array can have.  This can be single object types or multiple.
+* oneOf | anyOf | not - value is an array of objects defining what is allowed.  Will be explained with examples in the standards later.
+* $ref - value of this attribute is a reference to another schema or subset of a schema.  Will explain in more detail later.
 
 For a full set of what is allowed see the json schema [2].
 
@@ -61,7 +61,7 @@ References to to a property can be made by name and can be relative to a resourc
 ###"patternProperties"
 Similar to properties but allows defining patterns (regex) for child object names instead of specifying a concrete string value.  All other rules for properties apply.
 
-"additionalProperties"
+###"additionalProperties"
 A peer to properties and/or patternProperties, default value is false.  If value is true, then only the properties defined in the properties section or that match the patternProperties section are allowed in the schema.  Any document that has extra properties will fail validation.  The thing to remember about this attribute is that it applies ONLY to immediate properties.  It does not apply to properties pulled in via anyOf or allOf.
 
 ###"required"
