@@ -75,7 +75,7 @@ There are two core fields that enable RDBMS schema mapping to be dynamic and fle
 * `bindings` - configures the variables to put or collect from the SQL statement.
 * `expressions` - flexible structure of crieteria and conditions for evaluation of an expression.
 
-### Binding
+### bindings
 
 The binding allow you to specify intermediate placeholders for inbound and outbound data.
 
@@ -102,16 +102,15 @@ For each the following attributes are set:
 }
 ```
 
-### Expressions
+### expressions
 
-This field holds and array which the objects' types may vary. It can be:
+This field holds an array of:
 
 
-* SQL statements (insert, delete, select, etc) with an optimal datasource to overload the already defined for this entity
-* Conditional statement, describe the logic to be evaluated, what should happen and 'Else ifs'. This fields makes a recursive reference to expressions again
-* $foreach and $for iterate operators.We can use this field to use each value from the given path. This fields makes a recursive reference to expressions again
+* `$statement` - SQL statements (insert, delete, select, update, call) with an optional `datasource` to override the default value for the entity.
+* `$if` - conditional statement describing the logic to be evaluated, what should happen, and optional `$elseIf` or `$else`.
+* `$foreach` and `$for` - iteration operators used to operate on each value in a given result.
 
-Below an example of expression (which can be used on any Lightblue's operations):
 
 ```
  "expressions" : [
