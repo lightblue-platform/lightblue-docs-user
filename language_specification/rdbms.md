@@ -393,7 +393,7 @@ The [$field-check-field](https://github.com/lightblue-platform/lightblue/blob/ma
 }
 ```
 * `field`: A required String that represents a field from the Entity or an inputed variable
-* `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference][opid].It will return the evaluation of the field against rfield using the operation op
+* `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference][../language_specification/rdbms.html#op].It will return the evaluation of the field against rfield using the operation op
 * `rfield`: A required String that represents a field from the Entity or an inputed variable
 
 ### $field-check-value
@@ -459,7 +459,7 @@ The [$field-regex](https://github.com/lightblue-platform/lightblue/blob/master/l
 * `extended`: A non-required bolean field that can enable or disable the case extend function of the regex execution
 * `dotall`: A non-required bolean field that can enable or disable the regex to match any character including a newline
 
-### [opid]op
+### op
 The [op](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 "op": "enum": [
