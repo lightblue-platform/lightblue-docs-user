@@ -12,4 +12,5 @@
    * [Data](rest_specification/data.md)
 * [Standards](standards/README.md)
    * [Versioning](standards/versioning.md)
+   * [JSON Schema](standards/json_schema.md)
 

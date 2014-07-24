@@ -2,18 +2,20 @@
 This article aims to give an overview about the RDBMS module, describe its propose and give some fine details of usage.
 
 ## RDBMS Overview
-Lightblue can have its data storaged in different kinds of databases due its flexible plugin-enabled architeture, it just require the implementation of the business logic to handle the integration.
+Lightblue can have its data storaged in different kinds of databases due its flexible plugin-enabled architeture.  It just requires the implementation of the business logic to handle the specific data storage.
 
-As some (or all) data can be hard to migrate (or even it can't be migrate due some internal constraints) to another database - in the case of Lightblue default is MongoDB - There is already RDBMS module that makes possible that Lightblue's data be storaged in a SQL database.
+To use this module the user must:
 
-To use this module, the user must setup the RBMS enviroment (the database itself and the datasource connection in Application Server) and inform through metadata some information to integrate an entity (in the current version) with the related tables (and procedures) that will be used an relational database to persist entity data. You can also specify the business logic -like the condition and iterate over a variable- to archive that (very similar to the query specification).
+1. setup the RDBMS enviroment
+2. make a datasource available to lightblue via JNDI
+3. create metadata using the RDBMS datastore, referencing the JNDI above
 
-### How does it works
-To configure your entity’s data be persisted on a RDBMS, you need to inform the datastore field that will have the JNDI for the configured JDBC datasource connection pool on the [datasources.json](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rest/etc/mongo/datasources.json) which will have the JNDI to the connection pool. By default the datasource that will be used is the one defined in the Entity's [EntityInfo](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/entityInfo.json) (which is defined in the [Metadata](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json)).
+### How it works
+To configure your entity’s data be persisted on a relational database, you need to create metadata that references a valid JNDI name for a datasource connection pool in [datasources.json](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rest/etc/mongo/datasources.json). By default the datasource used is defined in the [Metadata’s schema](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/schema.json)).
 
-Then, you have to create a special field called 'rdbms' in the EntityInfo's schema. The RDBMS schema is [this ](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/rdbms.json). It will map all the lightblue's operations (insert, save, delete, etc) so the entity can be properly handled by the Lightblue’s RDBMS controller (mapped by [lightblue-crud.json](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rest/etc/mongo/lightblue-crud.json)).
+In the Schema of your metadata create an rdbms`field following [rdbms.json](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/rdbms.json). This field maps all the lightblue CRUD operations (insert, find, update, save, delete) so the entity can be properly handled by the lightblue RDBMS controller (mapped by [lightblue-crud.json](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rest/etc/mongo/lightblue-crud.json)).
 
-A simple example of a new Entity Metadata that will use RDBMS for data persistence:
+A simple example of a new Entity Metadata that will use RDBMS for data persistence.  The JNDI name for the datasource is `rdbmsdata`:
 ```
 {
   "entityInfo" : {
@@ -40,7 +42,7 @@ A simple example of a new Entity Metadata that will use RDBMS for data persisten
         "delete":["anyone"]
     },
     "fields": {
-        "_id": {"type": "string"},
+        "id": {"type": "string"},
         "object_type": {"type": "string"},
         "login": {
             "type": "string",
@@ -64,15 +66,22 @@ A simple example of a new Entity Metadata that will use RDBMS for data persisten
 ```
 
 ### RDBMS Schema at a glance
-There are two core fields that enable RDBMS schema mapping to be dynamic and flexible: one is 'bindings' field; and the other one is 'expressions' field. These fields are the same for any Lightblue's operation (delete, fetch, ...). In elevator pitch:
 
-* The bindings helps to the user inform the variables he/she wants to put or collect from the SQL statement.
+There are two core fields that enable RDBMS schema mapping to be dynamic and flexible:
 
-* The expressions is a flexible structure that can be recursive and create for loops, conditional statements and evaluation of expression to archive that the SQL statements can run properly.
+* `bindings` - configures the variables to put or collect from the SQL statement.
+* `expressions` - flexible structure of crieteria and conditions for evaluation of an expression.
 
+#### bindings
 
-#### Binding
-The binding will help you to create a variable to be the intermidiate for inbounds ('in')(the values that need to be inserted into the statements) and outbounds ('out')(the values that need to be extract from the queries). So you can use the 'column' field to use that name in as many statements you want. You can also use those variables for the loop iterate. Below a example of this field:
+The binding allow you to specify intermediate placeholders for inbound and outbound data.
+
+* `in` - the values that need to be inserted into the statements
+* `out` - the values that need to be extracted from the result set
+
+For each the following attributes are set:
+* `column` - the column in the request or result to bind to the given path
+* `path` - the name to bind the result in the column to for future use
 
 ```
 "bindings": {
@@ -90,54 +99,85 @@ The binding will help you to create a variable to be the intermidiate for inboun
 }
 ```
 
+#### expressions
 
-#### Expressions
-This field holds and array which the objects' types may vary. It can be:
+This field holds an array of:
 
-* SQL statements (insert, delete, select, etc) with an optimal datasource to overload the already defined for this entity
-* Conditional statement, describe the logic to be evaluated, what should happen and 'Else ifs'. This fields makes a recursive reference to expressions again
-* $foreach and $for iterate operators.We can use this field to use each value from the given path. This fields makes a recursive reference to expressions again
-
-Below an example of expression (which can be used on any Lightblue's operations):
+* `$statement` - SQL statements (insert, delete, select, update, call) with an optional `datasource` to override the default value for the entity.
+* `$if` / `$then` - conditional statement describing the logic to be evaluated, what should happen, and optional `$elseIf` or `$else`.
+* `$foreach` and `$for` - iteration operators used to operate on each value in a given result.
 
 ```
  "expressions" : [
-            {
-            "$statement" :
-               {
-                "sql" : "SELECT * FROM DUAL",
-                "type" : "select"
+    {
+        "$statement": {
+            "sql": "SELECT * FROM DUAL",
+            "type": "select"
+        }
+    },
+    {
+        "$if": {
+            "$or": [
+                {
+                    "$path-check-path": {
+                        "path1": "x",
+                        "conditional": "$greaterThan",
+                        "path2": "y"
+                    }
+                },
+                {
+                    "$path-check-values": {
+                        "path1": "z",
+                        "conditional": "$contains",
+                        "values2": ["a", "1", "3"]
+                    }
                 }
-           },
-           {
-            "$if" :
-               {
-                  "$or" : [	{"$path-check-path" : {"path1" : "x", "conditional" : "$greaterThan", "path2" : "y",}},
-				{"$path-check-values" :{"path1" : "z", "conditional" : "$contains", "values2" : ["a","1","3"],}},
-			]
-               },
-            "$then" : "$fail",
-            "$elseIf" : [
-               {
-                "$if" :{"$path-check-path" : {"path1" : "x", "conditional" : "$greaterThan", "path2" : "z",},
-                "$then" :[{ "sql" : "SELECT 5 FROM DUAL","type" : "select"}]
-               },
-            "$else" :[
-		{
-		  "$foreach" :{
-                        "iterateOverPath" :"z",
-                        "expressions" : [{ "sql" : "SELECT z FROM DUAL","type" : "select"}]
-                     }
-		},
-		{
-		  "$for" :{
-                        "loopTimes" : "10",
-                        "loopCounterVariableName" :"i",
-                        "expressions" : [{ "sql" : "SELECT i FROM DUAL","type" : "select"}]
-                     }
-		}
-             ]
-           }
+            ]
+        },
+        "$then": "$fail",
+        "$elseIf": [
+            {
+                "$if": {
+                    "$path-check-path": {
+                        "path1": "x",
+                        "conditional": "$greaterThan",
+                        "path2": "z"
+                    },
+                    "$then": [
+                        {
+                            "sql": "SELECT 5 FROM DUAL",
+                            "type": "select"
+                        }
+                    ]
+                },
+                "$else": [
+                    {
+                        "$foreach": {
+                            "iterateOverPath": "z",
+                            "expressions": [
+                                {
+                                    "sql": "SELECT z FROM DUAL",
+                                    "type": "select"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "$for": {
+                            "loopTimes": "10",
+                            "loopCounterVariableName": "i",
+                            "expressions": [
+                                {
+                                    "sql": "SELECT i FROM DUAL",
+                                    "type": "select"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    }
 ]
 ```
 
