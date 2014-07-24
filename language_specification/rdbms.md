@@ -393,7 +393,7 @@ The [$field-check-field](https://github.com/lightblue-platform/lightblue/blob/ma
 }
 ```
 * `field`: A required String that represents a field from the Entity or an inputed variable
-* `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference][../language_specification/rdbms.html#op].It will return the evaluation of the field against rfield using the operation op
+* `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference](../language_specification/rdbms.html#op).It will return the evaluation of the field against rfield using the operation op
 * `rfield`: A required String that represents a field from the Entity or an inputed variable
 
 ### $field-check-value
@@ -415,7 +415,7 @@ The [$field-check-value](https://github.com/lightblue-platform/lightblue/blob/ma
 }
 ```
 * `field`: A required String that represents a field from the Entity or an inputed variable
-* `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference][opid]. It will return the evaluation of the field against rfield using the operation op
+* `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference](../language_specification/rdbms.html#op). It will return the evaluation of the field against rfield using the operation op
 * `value`: A required String that represents a simple value to be used to comparison
 
 ### $field-check-values
@@ -437,7 +437,7 @@ The [$field-check-values](https://github.com/lightblue-platform/lightblue/blob/m
 }
 ```
 * `field`: A required String that represents a field from the Entity or an inputed variable
-* `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference][opid]. It will return the evaluation of the field against rfield using the operation op
+* `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference](../language_specification/rdbms.html#op). It will return the evaluation of the field against rfield using the operation op
 * `values`: An array of required String that represents a simple value to be used to comparison
 
 ### $field-regex
