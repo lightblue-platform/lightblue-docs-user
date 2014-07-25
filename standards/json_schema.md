@@ -1,11 +1,15 @@
-The objective of this document is to show both how json schema works and how we are using it.  As the spec is currently in draft this document is subject to radical change in the future.  There are some problems with json schema, so hopefully updates will come along eventually to fix things.
+# Overview
+The objective of this document is to show both how json schema works and how we are using it.  As the spec [1] is currently in draft this document is subject to radical change in the future.  There are some problems with json schema, so hopefully updates will come along eventually to fix things.
+> Note: There is a [reference section](../standards/json_schema.md.html#References) in the end of this page with the links cited using '[ ]'
 
-There is some documetation on the standard [1] but it's pretty weak.  The best I found was to use the schema for json schema [2] and a reasonably advanced example [3].  Even then there are some things that are not intuitive so I'm going to outline those things here.  I will not be defining our use of the schema in this section, so look to later sections for that detail.
+There is some official documetation on the standard [2] but It might not be enough without practical examples. The same official page also provide some examples [3] (some that might be even helpeful are the advanced examples[4]. As it is still in draft and it is very new, there is an active group of user discussion about json schema [5] as well a special tag in StackOverflow [6]. As many other projects are already using json schema, some of them also wrote some documentation and examples that can be a complementary study, such as spacetelescope [7], usingjsonschema[8] and jsonary [9] and many other that you may find in the internet. It is strongly recommend to study how the json schema works to best usage of Lightblue. You can try out some online tools for help like jsonschema.net [10]
 
-A json schema is just a json document that conforms to the schema specification [2].  For our purposes we'll be saving them as resources (files) in a project.  Each schema can be referenced by other schemas.  Or you can reference a subset of the schema.
+There might be some things about json schema that are not intuitive, so this documentation will outline them here.  This section doesn't aim to define the Lightblue use of the schema, so look to later sections for that detail.
+
+In summary, a json schema is just a json document that conforms to the schema specification [1].  For Lightblue purposes, it defined some resources (files) in the project.  Each schema can be referenced by other schemas.  Or you can reference a subset of the schema.
 
 #JSON Schema
-Since a schema is just a json document it is composed of objects and fields with values.  I will go through the main components here and make note of the bits that were either hard to find to figure out or will be key for later sections for our standard.
+Since a schema is just a json document it is composed of objects and fields with values.  This section will go through the main components here and make note of the bits that were either hard to find to figure out or will be key for later sections for our standard.
 
 ##Identity
 Each schema is identified by the URI at which it can be located.  That means you can have local and remote schemas.  This identity is important from the schema trying to do the reference, but you can specify an identity in the target with the "id" attribute as noted in a later section.  For local schema resources, it is relative to the root of the classpath and includes up through the schema name.  For example, if you had a schema in a directory called "foo" on the classpath and the schema was called "myschema.json" you could reference it with "/foo/myschema.json#".  The "#" in the reference indicates the root for a schema.  From there you can reference individual elements, which will be covered later.  If you had a second schema in the "foo" directory it could take a shortcut and do a relative reference of "myschema.json#".
@@ -35,7 +39,7 @@ An object that captures a bag of properties that are top level attributes expose
 * oneOf | anyOf | not - value is an array of objects defining what is allowed.  Will be explained with examples in the standards later.
 * $ref - value of this attribute is a reference to another schema or subset of a schema.  Will explain in more detail later.
 
-For a full set of what is allowed see the json schema [2].
+For a full set of what is allowed see the json schema [1].
 
 ####Example: References
 References to to a property can be made by name and can be relative to a resource as noted in the "Identity" section of this document.  See how the property "target" is referenced by the property "source" and definition "origin" in this example below:
@@ -117,7 +121,7 @@ In general, always try to include a description for all properties defined.  An 
 ###"type"
 Set a type for all schemas else code generation won't work.  For "$ref" do not set a type.
 
-There are many simple types defined in the json schema.  To use them, simply specify a "type" attribute with a value of http://json-schema.org/draft-04/schema#/definitions/simpleTypes [2].  For quick reference, they are:
+There are many simple types defined in the json schema.  To use them, simply specify a "type" attribute with a value of http://json-schema.org/draft-04/schema#/definitions/simpleTypes [1].  For quick reference, they are:
 "array"
 "boolean"
 "integer"
@@ -298,7 +302,7 @@ If you remove a property from the extended schema the extension still has that p
 #Tools
 
 ##Validation
-The best way to validate is to write a unit test, but sometimes you want to do a quick check.  For those times you can use JSON Schema syntax validation.  For example, validating the example schemas on this document was done in this online tool.
+The best way to validate is to write a unit test, but sometimes you want to do a quick check.  For those times you can use JSON Schema syntax validation[11].  For example, validating the example schemas on this document was done in this online tool.
 
 ###Abstract Java Test Class
 Maven dependencies:
@@ -441,7 +445,7 @@ Because JSON Schema is just a JSON document you can in theory simply use any jso
 We are not doing object generation.  Updates on tips welcome!
 
 ##JSON Equality
-When you need to do simple comparison of 2 json documents for equality (maybe after doing json2java then java2json) consider JSONAssert [5]. Can do non-strict JSON string comparisons (element order and extra fields ignored) very simply.  Strict comparison can be done as well, but that seems like a lot of extra work to get things in the same order again.
+When you need to do simple comparison of 2 json documents for equality (maybe after doing json2java then java2json) consider JSONAssert [12]. Can do non-strict JSON string comparisons (element order and extra fields ignored) very simply.  Strict comparison can be done as well, but that seems like a lot of extra work to get things in the same order again.
 
 For maven dependency see the quickstart: http://jsonassert.skyscreamer.org/quickstart.html
 ```
@@ -455,7 +459,19 @@ public void jsonTest() throws Exception {
 
 #References
 [1] json schema site - http://json-schema.org/<br/>
-[2] json schema's schema - http://json-schema.org/schema<br/>
-[3] advanced example - http://json-schema.org/example2.html<br/>
-[4] validation - http://json-schema-validator.herokuapp.com/syntax.jsp<br/>
-[5] JSONAssert - http://jsonassert.skyscreamer.org/<br/>
+[2] json schema documentation - http://json-schema.org/documentation.html<br/>
+[3] examples - http://json-schema.org/examples.html<br/>
+[4] advanced examples - http://json-schema.org/example2.html<br/>
+[5] User Group about JSon Schema - https://groups.google.com/forum/#!forum/json-schema<br/>
+[6] StackOverflow tag for JSON Schema - https://stackoverflow.com/questions/tagged/jsonschema<br/>
+[7] Another JSON schema documentation from spacetelescope - https://spacetelescope.github.io/understanding-json-schema<br/>
+[8] Another JSON schema documentation from usingjsonschema - http://usingjsonschema.com/?page_id=5<br/>
+[9] Another JSON schema documentation from jsonary - http://jsonary.com/documentation/json-schema/<br/>
+[10] An example of tool to create and validate JSON schema online - http://jsonschema.net/<br/>
+[11] validation - http://json-schema-validator.herokuapp.com/syntax.jsp<br/>
+[12] JSONAssert - http://jsonassert.skyscreamer.org/<br/>
+
+
+
+
+
