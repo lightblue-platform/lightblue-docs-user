@@ -1,6 +1,6 @@
 # Overview
 The objective of this document is to show both how json schema works and how we are using it.  As the spec [1] is currently in draft this document is subject to radical change in the future.  There are some problems with json schema, so hopefully updates will come along eventually to fix things.
-> Note: There is a [reference section](../standards/json_schema.md.html#References) in the end of this page with the links cited using '[ ]'
+> Note: There is a [reference section](../standards/json_schema.html#References) in the end of this page with the links cited using '[ ]'
 
 There is some official documetation on the standard [2] but It might not be enough without practical examples. The same official page also provide some examples [3] (some that might be even helpeful are the advanced examples[4]. As it is still in draft and it is very new, there is an active group of user discussion about json schema [5] as well a special tag in StackOverflow [6]. As many other projects are already using json schema, some of them also wrote some documentation and examples that can be a complementary study, such as spacetelescope [7], usingjsonschema[8] and jsonary [9] and many other that you may find in the internet. It is strongly recommend to study how the json schema works to best usage of Lightblue. You can try out some online tools for help like jsonschema.net [10]
 
