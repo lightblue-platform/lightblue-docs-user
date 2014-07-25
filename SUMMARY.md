@@ -13,4 +13,6 @@
 * [Standards](standards/README.md)
    * [Versioning](standards/versioning.md)
    * [JSON Schema](standards/json_schema.md)
+* [Cookbook](cookbook/README.md)
+   * [Binary Data](cookbook/binary_data.md)
 
