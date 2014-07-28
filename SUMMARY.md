@@ -15,4 +15,5 @@
    * [JSON Schema](standards/json_schema.md)
 * [Cookbook](cookbook/README.md)
    * [Binary Data](cookbook/binary_data.md)
+   * [Custom Hook](cookbook/custom_hook.md)
 
