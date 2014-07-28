@@ -18,7 +18,7 @@ Each schema is identified by the URI at which it can be located.  That means you
 All of these attributes are optional.  You won't have an empty schema, so perhaps you can say at least one complex child is required (object), but you can mix and match them as necessary.
 
 ###"id"
-An attribute at the root level of the document and on each of the major sub-objects, id should be usable as a reference to the schema or sub-object.  I say should because I have yet to see it work.  Thankfully there are other ways to do references.  The value in the "id" should probably start with "#" to indicate it's relative to the root of the schema.  Given it has no real value it can be left off of everything.
+An attribute at the root level of the document and on each of the major sub-objects, id should be usable as a reference to the schema or sub-object.  As the JSON schema specification still not in a final version this may not work. But there are other ways to do references.  The value in the "id" should probably start with "#" to indicate it's relative to the root of the schema.  Given it has no real value it can be left off of everything.
 
 ###"$schema"
 Attribute indicating what json schema the schema defined in the resource conforms to.  The current version is v4-draft (http://json-schema.org/draft-04/schema#).  Recommend setting this so your schema won't default to the current version, which may or may not be backwards compatible.
@@ -32,7 +32,7 @@ An object that captures a bag of properties that are top level attributes expose
 * description - a description of the property, can always be present
 * enum - an array of strings enumerating a concrete set of values allowed in this property
 * type - can be simple types (e.g. "string", "integer") or complex types (e.g. "object", "array")
-* format - can further restrict the format of simple types.  I haven't seen this used much, but one is "regex".
+* format - can further restrict the format of simple types.  For example: "regex".
 * minItems - when type is array, integer value indicates the minimum number of items required.
 * maxItems - when type is array, integer value indicates the maximum number of items allowed.
 * items - defines the types of contents the array can have.  This can be single object types or multiple.
@@ -96,7 +96,7 @@ References to to a definition can be made by name and can be relative to a resou
 ```
 
 ###"anyOf"
-An array of schemas.  Any number of them can be matched.  Haven't tested it, but I expect that allows for none to match.
+An array of schemas.  Any number (one or more) of them can be matched.
 
 ###"oneOf"
 An array of scheams.  Only one can match.
@@ -148,7 +148,7 @@ required
 If setting additional properties to false take care that considerations for schema inheritance are taken.
 
 ###"type":"string"
-Can optionally restrict the format with a "format" attribute but not all tools support it and those that do may have differing interpretations of each value.  I haven't found a canonical set of values accepted but some I have seen used are:
+Can optionally restrict the format with a "format" attribute but not all tools support it and those that do may have differing interpretations of each value.  Some of the canonical set of values accepted are:
 regex
 uri
 
