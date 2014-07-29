@@ -57,7 +57,6 @@ At the most basic level the `lightblue-metadata.json` file in your lightblue mod
     "dataSource": "metadata",
     "collection": "metadata"
 }
-
 ```
 
 To do the same with puppet and hiera, set the following in your hiera hierarchy somewhere:
@@ -67,6 +66,14 @@ lightblue::eap::module::hook_configuration_parsers:
     - com.redhat.lightblue.config.AuditHookConfigurationParser
 ```
 
-
 # TO BE CONTINUED
 CRUD bits to come later.. they're still under development!
+
+Notes for future documentation.
+
+## AuditHook
+* extends `CRUDHook`
+* business logic to
+    * check for changes
+    * presist changes
+
