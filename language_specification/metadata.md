@@ -69,7 +69,6 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
 ```
     "datastore" : {
         "backend" : "mongo",
-        "clientJndiName" : jndi name for client,
         "datasource" : logical name for the datasource,
         "database" : database name
         "collection" : collection name
