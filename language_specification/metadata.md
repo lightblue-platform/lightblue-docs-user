@@ -130,8 +130,10 @@ be a simple value, an array, or an object:
 
 * "name": name of the field, this is the property name in the json document
 * type: one of:
-   *  basic types: boolean, integer (64-bit int), string, double, biginteger, bigdecimal, date, binary
+   *  basic types: boolean, integer (64-bit int), string, double, biginteger, bigdecimal, date, binary, uid
        * If a field is defined as biginteger, or bigdecimal in metadata, store the value as string, and don't allow &lt; &gt; operators during search.operators are not supported for this field during search.
+       * binary - an open-ended data type for storing binary data, it is recommended that each use of this field clearly indicates what encoding is used.  For example, in java using DatatypeConverter.printBase64Binary(byte[]) the encoding spec is http://www.w3.org/TR/xmlschema-2/#base64Binary
+       * uid - unique identifier field that can be used anywhere within a document, specifically created to support identity of array elements
    * date: Re: How will we represent date in JSON?
    * a container type: object, array
 * fields: If type=object, an array of field objects
