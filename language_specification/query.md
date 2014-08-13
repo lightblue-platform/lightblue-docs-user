@@ -34,7 +34,7 @@ nary_relational_expression := { field: <field>,
 nary_comparison_operator := "$in" "$not_in" "$nin"
 
 regex_match_expression := { field: <field>, regex: <pattern>,
-                            case_insensitive: false,
+                            caseInsensitive: false,
                             extended: false,
                             multiline: false,
                             dotall: false }
