@@ -336,27 +336,27 @@ The [conditional](https://github.com/lightblue-platform/lightblue/blob/master/li
 ```
 ```
 {
-    "$field-empty": $field-empty
+    "$fieldEmpty": $fieldEmpty
 }
 ```
 ```
 {
-    "$field-check-field": $field-check-field
+    "$fieldCheckField": $fieldCheckField
 }
 ```
 ```
 {
-    "$field-check-value": $field-check-value
+    "$fieldCheckValue": $fieldCheckValue
 }
 ```
 ```
 {
-    "$field-check-values": $field-check-values
+    "$fieldCheckValues": $fieldCheckValues
 }
 ```
 ```
 {
-    "$field-regex": $field-regex
+    "$fieldRegex": $fieldRegex
 }
 ```
 
@@ -365,8 +365,8 @@ The [conditional](https://github.com/lightblue-platform/lightblue/blob/master/li
 * `$not`: it is a conditional object. If the informed conditional is asseted as false, it will trigger the then field associated with this field
 * The other fields are objects which will be described in more details in next sections
 
-### $field-empty
-The [$field-empty](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+### $fieldEmpty
+The [$fieldEmpty](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 {
     "field": String
@@ -374,8 +374,8 @@ The [$field-empty](https://github.com/lightblue-platform/lightblue/blob/master/l
 ```
 * `field`: A required String that represents a field from the Entity or an inputed variable. If the evaluation of the field is empty, this conditional will return true, otherwise it will return false
 
-### $field-check-field
-The [$field-check-field](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+### $fieldCheckField
+The [$fieldCheckField](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 {
     "field": String,
@@ -396,8 +396,8 @@ The [$field-check-field](https://github.com/lightblue-platform/lightblue/blob/ma
 * `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference](../language_specification/rdbms.html#op).It will return the evaluation of the field against rfield using the operation op
 * `rfield`: A required String that represents a field from the Entity or an inputed variable
 
-### $field-check-value
-The [$field-check-value](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+### $fieldCheckValue
+The [$fieldCheckValue](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 {
     "field": String,
@@ -418,8 +418,8 @@ The [$field-check-value](https://github.com/lightblue-platform/lightblue/blob/ma
 * `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference](../language_specification/rdbms.html#op). It will return the evaluation of the field against rfield using the operation op
 * `value`: A required String that represents a simple value to be used to comparison
 
-### $field-check-values
-The [$field-check-values](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+### $fieldCheckValues
+The [$fieldCheckValues](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 {
     "field": String,
@@ -440,13 +440,13 @@ The [$field-check-values](https://github.com/lightblue-platform/lightblue/blob/m
 * `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference](../language_specification/rdbms.html#op). It will return the evaluation of the field against rfield using the operation op
 * `values`: An array of required String that represents a simple value to be used to comparison
 
-### $field-regex
-The [$field-regex](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+### $fieldRegex
+The [$fieldRegex](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 {
     "field": String,
     "regex": String,
-    "case_insensitive": boolean,
+    "caseInsensitive": boolean,
     "multiline": boolean,
     "extended": boolean,
     "dotall": boolean
@@ -454,7 +454,7 @@ The [$field-regex](https://github.com/lightblue-platform/lightblue/blob/master/l
 ```
 * `field`: A required String that represents a field from the Entity or an inputed variable.
 * `regex`: A required String that must follow the regex standard format. It will be used to be evaluated against the target field
-* `case_insensitive`: A non-required bolean field that can enable or disable the case sensitive of the regex execution
+* `caseInsensitive`: A non-required bolean field that can enable or disable the case sensitive of the regex execution
 * `multiline`: A non-required bolean field that can enable or disable the multilne usage of the regex execution
 * `extended`: A non-required bolean field that can enable or disable the case extend function of the regex execution
 * `dotall`: A non-required bolean field that can enable or disable the regex to match any character including a newline
