@@ -20,8 +20,12 @@ To make a hook you need:
 
 Specifically saying "an implementation" above because there could be an existing implementation that is usable.
 
-## AuditHookConfiguration
-THe hook configuration is purposefully not implemented because there is no schema.  Your hook is likely going to need very specific configuration options.  Therefore it's left to the hook implementer.  There are no required attributes.  For each configuration a corresponding parser must exist.  There's no requirements for configurations, but recommendations are:
+## Example: the implementation of AuditHook
+
+In the following sections you will find more details how Hook implementation and configuration works using the AuditHook as an example.
+
+### AuditHookConfiguration
+The hook configuration is purposefully not implemented because there is no schema.  Your hook is likely going to need very specific configuration options.  Therefore it's left to the hook implementer.  There are no required attributes.  For each configuration a corresponding parser must exist.  There's no requirements for configurations, but recommendations are:
 * make the implementation immutable
 * do not contain any business logic
 
@@ -34,14 +38,14 @@ The implementation is simple and immutable with:
 * getters for all attributes
 * implements `HookConfiguration`
 
-## AuditHookConfigurationParser
-Hook configuration parsers take an input object type (set via generics) and create the specific hook configuration implementation.  In this case the parser:
+### AuditHookConfigurationParser
+Hook configuration parsers take an input object type (set via generics) and create the specific hook configuration implementation. In this case the parser:
 * takes a `JsonNode` input
 * returns a `AuditHookConfiguration` implementation
 * uses `MetdataParser` argument to get fields from the input
 
-## Metadata Configuration
-To get this working the metadata mediator needs to be configured.  It knows about parsers via the `Extensions` class.  An example of how this can be configured manually is found in `AuditHookConfigurationParserTest`.
+### Metadata Configuration
+To get this working, the `metadata mediator` needs to be configured. It knows about parsers via the `Extensions` class. An example of how this can be configured manually is found in [AuditHookConfigurationParserTest](https://github.com/lightblue-platform/lightblue-audit-hook/blob/master/src/test/java/com/redhat/lightblue/hook/audit/AuditHookConfigurationParserTest.java).
 
 At the most basic level the `lightblue-metadata.json` file in your lightblue module needs to be told about the parser.  It is set by putting a property `hookConfigurationParsers` that has an array of strings that are the full class names of each of the parsers.
 
@@ -59,7 +63,7 @@ At the most basic level the `lightblue-metadata.json` file in your lightblue mod
 }
 ```
 
-To do the same with puppet and hiera, set the following in your hiera hierarchy somewhere:
+To do the same with Puppet and Hiera, set the following in your Hiera hierarchy somewhere:
 
 ```
 lightblue::eap::module::hook_configuration_parsers:
@@ -75,5 +79,5 @@ Notes for future documentation.
 * extends `CRUDHook`
 * business logic to
     * check for changes
-    * presist changes
+    * persist changes
 
