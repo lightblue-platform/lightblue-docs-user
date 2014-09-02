@@ -24,6 +24,9 @@ Specifically saying "an implementation" above because there could be an existing
 
 In the following sections you will find more details how Hook implementation and configuration works using the AuditHook as an example.
 
+### Metadata
+The audit metadata has one particular implementation requirement for the metadata.  A `defaultVersion` value must be specified on the `audit` entityInfo.  The implementation of the hook assumes that a default version is available as an optimization, so that the hook does not need to be configured for a specific version.
+
 ### AuditHookConfiguration
 The hook configuration is purposefully not implemented because there is no schema.  Your hook is likely going to need very specific configuration options.  Therefore it's left to the hook implementer.  There are no required attributes.  For each configuration a corresponding parser must exist.  There's no requirements for configurations, but recommendations are:
 * make the implementation immutable
