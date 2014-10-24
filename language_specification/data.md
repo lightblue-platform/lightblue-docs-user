@@ -24,7 +24,7 @@ object.
   information for the caller, which is auth implementation
   specific, or a session identifier obtained from an earlier call.
 * execution: Optional execution flags. If omitted, the call
-  is sycnchronous, and times out with partial completion if
+  is synchronous, and times out with partial completion if
   execution lasts longer than a preset limit.
   * timeLimit: The upper time limit for the call. If the call does
     not complete before the limit expires, call fails with partial
