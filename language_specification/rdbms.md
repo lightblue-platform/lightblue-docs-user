@@ -11,9 +11,9 @@ To use this module the user must:
 3. create metadata using the RDBMS datastore, referencing the JNDI above
 
 ### How it works
-To configure your entity’s data be persisted on a relational database, you need to create metadata that references a valid JNDI name for a datasource connection pool in [datasources.json](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rest/etc/mongo/datasources.json). By default the datasource used is defined in the [Metadata’s schema](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/schema.json)).
+To configure your entity’s data be persisted on a relational database, you need to create metadata that references a valid JNDI name for a datasource connection pool in [datasources.json](https://github.com/lightblue-platform/lightblue-rest/blob/master/etc/mongo/datasources.json). By default the datasource used is defined in the [Metadata’s schema](https://github.com/lightblue-platform/lightblue-core/blob/master/metadata/src/main/resources/json-schema/metadata/schema.json)).
 
-In the Schema of your metadata create an rdbms`field following [rdbms.json](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/rdbms.json). This field maps all the lightblue CRUD operations (insert, find, update, save, delete) so the entity can be properly handled by the lightblue RDBMS controller (mapped by [lightblue-crud.json](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rest/etc/mongo/lightblue-crud.json)).
+In the Schema of your metadata create an rdbms`field following [rdbms.json](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/rdbms.json). This field maps all the lightblue CRUD operations (insert, find, update, save, delete) so the entity can be properly handled by the lightblue RDBMS controller (mapped by [lightblue-crud.json](https://github.com/lightblue-platform/lightblue-rest/blob/master/etc/mongo/lightblue-crud.json)).
 
 A simple example of a new Entity Metadata that will use RDBMS for data persistence.  The JNDI name for the datasource is `rdbmsdata`:
 ```
@@ -22,8 +22,7 @@ A simple example of a new Entity Metadata that will use RDBMS for data persisten
     "name": "user",
     "datastore": {
         "backend":"rdbms",
-        "datasource": "rdbmsdata",
-        "collection": "user"
+        "datasource": "rdbmsdata"
     }
   },
   "schema" : {
@@ -55,11 +54,13 @@ A simple example of a new Entity Metadata that will use RDBMS for data persisten
         "createdDate": {"type": "date"}
     },
     "rdbms" : {
-        "delete": {"bindings":{...}, "expressions":[...]},
-        "fetch":{...},
-        "insert":{...},
-        "save":{...},
-        "update":{...}
+        "delete":{"bindings":{...}, "expressions":[...]},
+        "fetch":{"bindings":{...}, "expressions":[...]},
+        "insert":{"bindings":{...}, "expressions":[...]},
+        "save":{"bindings":{...}, "expressions":[...]},
+        "update":{"bindings":{...}, "expressions": [...]},
+        "dialect":"oracle",
+        "SQLMapping":{...}
     }
    },
 }
@@ -67,7 +68,7 @@ A simple example of a new Entity Metadata that will use RDBMS for data persisten
 
 ### RDBMS Schema at a glance
 
-There are two core fields that enable RDBMS schema mapping to be dynamic and flexible:
+There are the following core fields that enable RDBMS schema mapping to be dynamic and flexible:
 
 * `bindings` - configures the variables to put or collect from the SQL statement.
 * `expressions` - flexible structure of crieteria and conditions for evaluation of an expression.
@@ -80,19 +81,19 @@ The binding allow you to specify intermediate placeholders for inbound and outbo
 * `out` - the values that need to be extracted from the result set
 
 For each the following attributes are set:
-* `column` - the column in the request or result to bind to the given path
-* `path` - the name to bind the result in the column to for future use
+* `column` - the column in the request or result to bind to the given field
+* `field` - the name to bind the result in the column to for future use
 
 ```
 "bindings": {
     "in" : [
         {
             "column" : "NameCustomer",
-            "path"   : "name"
+            "field"   : "name"
         },
         {
             "column" : "y",
-            "path"   : "x"
+            "field"   : "x"
         }
     ],
     "out" : [..]
@@ -103,57 +104,57 @@ For each the following attributes are set:
 
 This field holds an array of:
 
-* `$statement` - SQL statements (insert, delete, select, update, call) with an optional `datasource` to override the default value for the entity.
-* `$if` / `$then` - conditional statement describing the logic to be evaluated, what should happen, and optional `$elseIf` or `$else`.
-* `$foreach` and `$for` - iteration operators used to operate on each value in a given result.
+* `statement` - SQL statements (insert, delete, select, update, call).
+* `if` / `then` - conditional statement describing the logic to be evaluated, what should happen, and optional `elseIf` or `else`.
+* `foreach` and `for` - iteration operators used to operate on each value in a given result.
 
 ```
  "expressions" : [
     {
-        "$statement": {
+        "statement": {
             "sql": "SELECT * FROM DUAL",
             "type": "select"
         }
     },
     {
-        "$if": {
-            "$or": [
+        "if": {
+            "or": [
                 {
-                    "$path-check-path": {
-                        "path1": "x",
-                        "conditional": "$greaterThan",
-                        "path2": "y"
+                    "fieldCheckField": {
+                        "field": "x",
+                        "op": "gt",
+                        "rfield": "y"
                     }
                 },
                 {
-                    "$path-check-values": {
-                        "path1": "z",
-                        "conditional": "$contains",
-                        "values2": ["a", "1", "3"]
+                    "fieldCheckValues": {
+                        "field": "z",
+                        "op": "in",
+                        "values": ["a", "1", "3"]
                     }
                 }
             ]
         },
-        "$then": "$fail",
-        "$elseIf": [
+        "then": "fail",
+        "elseIf": [
             {
-                "$if": {
-                    "$path-check-path": {
-                        "path1": "x",
-                        "conditional": "$greaterThan",
-                        "path2": "z"
+                "if": {
+                    "fieldCheckField": {
+                        "fieldCheckField": "x",
+                        "op": "greaterThan",
+                        "rfield": "z"
                     },
-                    "$then": [
+                    "then": [
                         {
                             "sql": "SELECT 5 FROM DUAL",
                             "type": "select"
                         }
                     ]
                 },
-                "$else": [
+                "else": [
                     {
-                        "$foreach": {
-                            "iterateOverPath": "z",
+                        "foreach": {
+                            "iterateOverField": "z",
                             "expressions": [
                                 {
                                     "sql": "SELECT z FROM DUAL",
@@ -163,7 +164,7 @@ This field holds an array of:
                         }
                     },
                     {
-                        "$for": {
+                        "for": {
                             "loopTimes": "10",
                             "loopCounterVariableName": "i",
                             "expressions": [
@@ -189,7 +190,9 @@ As already discussed some details around the RDBMS module, now we will focus abo
     "fetch":  operation,
     "insert": operation,
     "save":   operation,
-    "update": operation
+    "update": operation,
+    "dialect":    RDBMS_VENDOR,
+    "SQLMapping": SQLMapping
 }
 ```
 * `delete`/`fetch`/`insert`/`save`/`update` : A Operation object for each Lightblue operation
@@ -235,37 +238,37 @@ The [InOut](https://github.com/lightblue-platform/lightblue/blob/master/lightblu
 Each RDBMS's [expression element of the array](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can be one of the following objects:
 ```
 {
-    "$statement": $statement
+    "statement": statement
 }
 ```
 ```
 {
-    "$if":     $if,
-    "$then":   $then,
-    "$elseIf": [$elseIf],
-    "$else": "$else"
+    "if":     if,
+    "then":   then,
+    "elseIf": [elseIf],
+    "else": "else"
 }
 ```
 ```
 {
-    "$foreach": $foreach
+    "foreach": foreach
 }
 ```
 ```
 {
-    "$for": $for
+    "for": for
 }
 ```
 
-* `$statement`: This object represent an SQL statement that needs to run in that informed order
-* `$if` et al: An conditional object that can make the dynamic SQL statement to run (or even to stop everything) depending on the inputted data
-* `$foreach`: This operator object will iterate over a field or variable
-* `$for`: This operator object will loop and create a variable that represent the state of the loop
+* `statement`: This object represent an SQL statement that needs to run in that informed order
+* `if` et al: An conditional object that can make the dynamic SQL statement to run (or even to stop everything) depending on the inputted data
+* `foreach`: This operator object will iterate over a field or variable
+* `for`: This operator object will loop and create a variable that represent the state of the loop
 
 An expression must follow one of those structures above, otherwise it won't be valid.
 
-### $statement
-The [$statement](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can defined as the following structure:
+### statement
+The [statement](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can defined as the following structure:
 ```
 {
     "sql": string,
@@ -275,20 +278,20 @@ The [$statement](https://github.com/lightblue-platform/lightblue/blob/master/lig
 * `sql`: This SQL statement is a required field of String type that you want to be executed. It have have variables to be inputed or extracted if it is necessary.
 * `type`: It represents the type of the SQL statement is. It must be one of the enum above and it is a required field.
 
-### $if et al
-The [$if et al](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) follows thi structure:
+### if et al
+The [if et al](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) follows thi structure:
 ```
 {
-    "$if":     conditional,
-    "$then":   elseOrThen,
-    "$elseIf": [elseIf],
-    "$else":   elseOrThen
+    "if":     conditional,
+    "then":   elseOrThen,
+    "elseIf": [elseIf],
+    "else":   elseOrThen
 }
 ```
-* `$if`: This field represent an object  that determinate the coditional that will trigger the execution of the `then` field or other field (if informed) of the same object (`elseif`s and `else`). It is a required field
-* `$then`: Only executed when the evaluation of 'if' returns true. More information on `elseOrThen`
-* `$elseIf`: an array of elseIf objects which try a different conditional in can the first if field of this object returned false
-* `$else`: Only executed when the evaluation. More information on `elseOrThen`
+* `if`: This field represent an object  that determinate the coditional that will trigger the execution of the `then` field or other field (if informed) of the same object (`elseif`s and `else`). It is a required field
+* `then`: Only executed when the evaluation of 'if' returns true. More information on `elseOrThen`
+* `elseIf`: an array of elseIf objects which try a different conditional in can the first if field of this object returned false
+* `else`: Only executed when the evaluation. More information on `elseOrThen`
 
 Where the `elseOrThen` is defined as following:
 ```
@@ -297,76 +300,76 @@ Where the `elseOrThen` is defined as following:
             [expressions]
         },
         {
-            "enum": ["$fail","$continue","$break"]
+            "enum": ["fail","continue","break"]
         }
     ]
 ```
 * `elseOrThen` can be defined with one of two distinct objects. It can be an array of `expressions` (also document in this article), or it can be one of the above enums, which:
-    *  `$fail`: will rollback the transaction
-    *  `$continue`: will skip the current loop iteration
-    *  `$break`: will break the loop iteration
+    *  `fail`: will rollback the transaction
+    *  `continue`: will skip the current loop iteration
+    *  `break`: will break the loop iteration
 
 
 ### conditional
 The [conditional](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) can be defined as one of following objects:
 ```
 {
-    "$or": [conditional]
+    "or": [conditional]
 }
 ```
 ```
 {
-    "$any": [conditional]
+    "any": [conditional]
 }
 ```
 ```
 {
-    "$and": [conditional]
+    "and": [conditional]
 }
 ```
 ```
 {
-    "$all": [conditional]
+    "all": [conditional]
 }
 ```
 ```
 {
-    "$not": conditional
+    "not": conditional
 }
 ```
 ```
 {
-    "$fieldEmpty": $fieldEmpty
+    "fieldEmpty": fieldEmpty
 }
 ```
 ```
 {
-    "$fieldCheckField": $fieldCheckField
+    "fieldCheckField": fieldCheckField
 }
 ```
 ```
 {
-    "$fieldCheckValue": $fieldCheckValue
+    "fieldCheckValue": fieldCheckValue
 }
 ```
 ```
 {
-    "$fieldCheckValues": $fieldCheckValues
+    "fieldCheckValues": fieldCheckValues
 }
 ```
 ```
 {
-    "$fieldRegex": $fieldRegex
+    "fieldRegex": fieldRegex
 }
 ```
 
-* `$or`/`$any`: it is an array of at least two conditional objects. If any of the informed conditionals are asseted as true, it will trigger the then field associated with this field
-* `$and`/`$all`: it is an array of at least two conditional objects. If all of the informed conditionals are asseted as true, it will trigger the then field associated with this field
-* `$not`: it is a conditional object. If the informed conditional is asseted as false, it will trigger the then field associated with this field
+* `or`/`any`: it is an array of at least two conditional objects. If any of the informed conditionals are asseted as true, it will trigger the then field associated with this field
+* `and`/`all`: it is an array of at least two conditional objects. If all of the informed conditionals are asseted as true, it will trigger the then field associated with this field
+* `not`: it is a conditional object. If the informed conditional is asseted as false, it will trigger the then field associated with this field
 * The other fields are objects which will be described in more details in next sections
 
-### $fieldEmpty
-The [$fieldEmpty](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+### fieldEmpty
+The [fieldEmpty](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 {
     "field": String
@@ -374,20 +377,20 @@ The [$fieldEmpty](https://github.com/lightblue-platform/lightblue/blob/master/li
 ```
 * `field`: A required String that represents a field from the Entity or an inputed variable. If the evaluation of the field is empty, this conditional will return true, otherwise it will return false
 
-### $fieldCheckField
-The [$fieldCheckField](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+### fieldCheckField
+The [fieldCheckField](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 {
     "field": String,
     "op": "enum": [
-        "$eq",
-        "$neq",
-        "$lt",
-        "$gt",
-        "$lte",
-        "$gte",
-        "$in",
-        "$nin"
+        "eq",
+        "neq",
+        "lt",
+        "gt",
+        "lte",
+        "gte",
+        "in",
+        "nin"
     ],
     "rfield": String
 }
@@ -396,20 +399,20 @@ The [$fieldCheckField](https://github.com/lightblue-platform/lightblue/blob/mast
 * `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference](../language_specification/rdbms.html#op).It will return the evaluation of the field against rfield using the operation op
 * `rfield`: A required String that represents a field from the Entity or an inputed variable
 
-### $fieldCheckValue
-The [$fieldCheckValue](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+### fieldCheckValue
+The [fieldCheckValue](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 {
     "field": String,
     "op": "enum": [
-        "$eq",
-        "$neq",
-        "$lt",
-        "$gt",
-        "$lte",
-        "$gte",
-        "$in",
-        "$nin"
+        "eq",
+        "neq",
+        "lt",
+        "gt",
+        "lte",
+        "gte",
+        "in",
+        "nin"
     ],
     "value": String
 }
@@ -418,20 +421,20 @@ The [$fieldCheckValue](https://github.com/lightblue-platform/lightblue/blob/mast
 * `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference](../language_specification/rdbms.html#op). It will return the evaluation of the field against rfield using the operation op
 * `value`: A required String that represents a simple value to be used to comparison
 
-### $fieldCheckValues
-The [$fieldCheckValues](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+### fieldCheckValues
+The [fieldCheckValues](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 {
     "field": String,
     "op": "enum": [
-        "$eq",
-        "$neq",
-        "$lt",
-        "$gt",
-        "$lte",
-        "$gte",
-        "$in",
-        "$nin"
+        "eq",
+        "neq",
+        "lt",
+        "gt",
+        "lte",
+        "gte",
+        "in",
+        "nin"
     ],
     "values": [String]
 }
@@ -440,8 +443,8 @@ The [$fieldCheckValues](https://github.com/lightblue-platform/lightblue/blob/mas
 * `op`: A required field which must be one of the above enums. A better description of this enum, look on [this reference](../language_specification/rdbms.html#op). It will return the evaluation of the field against rfield using the operation op
 * `values`: An array of required String that represents a simple value to be used to comparison
 
-### $fieldRegex
-The [$fieldRegex](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+### fieldRegex
+The [fieldRegex](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 {
     "field": String,
@@ -463,39 +466,39 @@ The [$fieldRegex](https://github.com/lightblue-platform/lightblue/blob/master/li
 The [op](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```
 "op": "enum": [
-    "$eq",
-    "$neq",
-    "$lt",
-    "$gt",
-    "$lte",
-    "$gte",
-    "$in",
-    "$nin"
+    "eq",
+    "neq",
+    "lt",
+    "gt",
+    "lte",
+    "gte",
+    "in",
+    "nin"
 ]
 ```
-* `$eq`: The equals operator. Example of A equals B, so A $eq B
-* `$neq`: The not equals operator. Example of A not equals B, so A $neq B
-* `$lt`: The less than operator. Example of 1 less than 2, so 1 $lt 2
-* `$gt`: The greater than operator. Example of 5 greater than 3, so 5 $gt 3
-* `$lte`: The less than or equals operator. Example of 1 less than or equals 1, so 1 $lte 2
-* `$gte`: The greater than or equals operator. Example of 5 greater than or equals 5, so 5 $gte 5
-* `$in`: The in operator. Example of [1,2,3] is in [1,2,3,4], so A $in B
-* `$nin`: The not in operator. Example of [1,3] is in [0,2,4], so A $nin B
+* `eq`: The equals operator. Example of A equals B, so A eq B
+* `neq`: The not equals operator. Example of A not equals B, so A neq B
+* `lt`: The less than operator. Example of 1 less than 2, so 1 lt 2
+* `gt`: The greater than operator. Example of 5 greater than 3, so 5 gt 3
+* `lte`: The less than or equals operator. Example of 1 less than or equals 1, so 1 lte 2
+* `gte`: The greater than or equals operator. Example of 5 greater than or equals 5, so 5 gte 5
+* `in`: The in operator. Example of [1,2,3] is in [1,2,3,4], so A in B
+* `nin`: The not in operator. Example of [1,3] is in [0,2,4], so A nin B
 
 ### elseIf
 The [elseIf](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can be defined as following:
 ```
 {
-    "$if": $if,
-    "$then": $then
+    "if": if,
+    "then": then
 }
 ```
-* `$if`: Required If object. Find more information about If Object in this article
-* `$then`: Required Then object. Find more information about Then Object in this article
+* `if`: Required If object. Find more information about If Object in this article
+* `then`: Required Then object. Find more information about Then Object in this article
 
 
-### $foreach
-The [$foreach](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) is structed as following:
+### foreach
+The [foreach](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) is structed as following:
 ```
 {
     "iterateOverField": String,
@@ -505,8 +508,8 @@ The [$foreach](https://github.com/lightblue-platform/lightblue/blob/master/light
 * `iterateOverField`: Required String. It will be evaluated in runtime to get a variable or a Entity's field array of values to iterate over it calling the informed expressions
 * `expressions`: Required expressions object. These expressions will be evaluated for each value from iterateOverField field
 
-### $for
-The [$for](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can be defined as following:
+### for
+The [for](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can be defined as following:
 ```
 {
     "loopTimes": number,
@@ -517,3 +520,39 @@ The [$for](https://github.com/lightblue-platform/lightblue/blob/master/lightblue
 * `loopTimes`: Required number. It will be evaluated in runtime to get a variable or a Entity's field to iterate over expressions as many times as it is results
 * `loopCounterVariableName`: Required String. It will be the temporary variable that will hold the current state of the loop
 * `expressions`: Required expressions object. These expressions will be evaluated for each value from iterateOverField field
+
+
+### dialect
+This field will enable you to  nform to lightblue which RDBMS Vendor is going to be used, so lightblue can generate some specific statements for that vendor. The only value supported right now is "oracle". Example:
+```
+{
+    "dialect": "oracle",
+}
+```
+
+
+### SQLMapping
+You can use this field to specify the relationship between the entity persisted as a document in lightblue and the tables envolved persisted in RDBMS. It must follow the below structure:
+```
+{
+    "columnToFieldMap":{
+        "table": "t",
+        "column": "c",
+        "field": "f"
+    },
+    "joins": [{
+        "tables": [{
+          "name": "n",
+          "alias": "a"
+        }],
+        "joinTablesStatement": "x",
+        "projectionMappings": [{
+          "column": "c",
+          "field": "f",
+          "sort": "s"
+        }]
+    }]
+}
+```
+* `columnToFieldMap`: Describe the relationship between eachfield to a column;
+* `joins`: Describe the tables, informing the necessary joins, sort alias, etc.
