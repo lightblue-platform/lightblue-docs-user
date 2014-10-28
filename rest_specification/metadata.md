@@ -194,7 +194,7 @@ GET /metadata/{entityName}/{version}
 ```
 
 ### Response: Success
-If the requested version of the entity exists a JSON document matching the [metadata JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json) is returned.
+If the requested version of the entity exists a JSON document matching the [metadata JSON-schema](https://raw.github.com/lightblue-platform/lightblue-core/master/metadata/src/main/resources/json-schema/metadata/metadata.json) is returned.
 
 If the requested version of the entity does not exist no result is returned (empty document).
 
@@ -208,7 +208,7 @@ Create a new entity by defining a new metadata.
 
 ### Request
 Two path params on the request representing the entity name and version.
-Body of request is a JSON document matching the [metadata JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json)
+Body of request is a JSON document matching the [metadata JSON-schema](https://raw.github.com/lightblue-platform/lightblue-core/master/metadata/src/main/resources/json-schema/metadata/metadata.json)
 ```
 PUT /metadata/{entityName}/{version}
 {metadata JSON document}
@@ -231,14 +231,14 @@ Create a new schema, representing a new version of an existing entity.
 
 ### Request
 Two path params on the request representing the entity name and version.
-Body of request is a JSON document matching the [schema JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/schema.json)
+Body of request is a JSON document matching the [schema JSON-schema](https://raw.github.com/lightblue-platform/lightblue-core/master/metadata/src/main/resources/json-schema/metadata/schema.json)
 ```
 PUT /metadata/{entityName}/schema={version}
 {schema JSON document}
 ```
 
 ### Response: Success
-On success returns the [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json) for the newly created version of the entity.  Note that this is *not* the schema JSON document, it is the metadata JSON document (entity info + schema).
+On success returns the [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue-core/master/metadata/src/main/resources/json-schema/metadata/metadata.json) for the newly created version of the entity.  Note that this is *not* the schema JSON document, it is the metadata JSON document (entity info + schema).
 
 ### Response: Errors
 Additional error codes:
@@ -253,14 +253,14 @@ Create an existing entity's info.
 
 ### Request
 One path param on the request representing the entity name.
-Body of request is a JSON document matching the [enttyInfo JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/entityInfo.json)
+Body of request is a JSON document matching the [enttyInfo JSON-schema](https://raw.github.com/lightblue-platform/lightblue-core/master/metadata/src/main/resources/json-schema/metadata/entityInfo.json)
 ```
 PUT /metadata/{entityName}
 {entityInfo JSON document}
 ```
 
 ### Response: Success
-On success returns the [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json) with the default version for the given entity.  Note that this is *not* the entityInfo JSON document, it is the metadata JSON document (entity info + schema).
+On success returns the [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue-core/master/metadata/src/main/resources/json-schema/metadata/metadata.json) with the default version for the given entity.  Note that this is *not* the entityInfo JSON document, it is the metadata JSON document (entity info + schema).
 
 ### Response: Errors
 Additional error codes:
@@ -277,10 +277,10 @@ Three path params to represent entity name, version, and new status. Optional ch
 PUT /metadata/{entityName}/{version}/{status}?comment={Change comment}
 ```
 
-Values for {status} are defined in the [schema JSON-schema](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/schema.json), see #definitions/status/properties/value/enum.
+Values for {status} are defined in the [schema JSON-schema](https://raw.github.com/lightblue-platform/lightblue-core/master/metadata/src/main/resources/json-schema/metadata/schema.json), see #definitions/status/properties/value/enum.
 
 ### Response: Success
-The [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json) for the given entity name and version.
+The [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue-core/master/metadata/src/main/resources/json-schema/metadata/metadata.json) for the given entity name and version.
 
 ### Response: Errors
 Additional error codes:
@@ -319,7 +319,7 @@ POST /metadata/{entityName}/{version}/default
 ```
 
 ### Response: Success
-The [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json) for the given entity name and version.
+The [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue-core/master/metadata/src/main/resources/json-schema/metadata/metadata.json) for the given entity name and version.
 
 ### Response: Errors
 Additional error codes:
@@ -337,7 +337,7 @@ POST /metadata/{entityName}/{version}/default
 ```
 
 ### Response: Success
-The [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue/master/lightblue-core/metadata/src/main/resources/json-schema/metadata/metadata.json) for the given entity name and version.
+The [metadata JSON document](https://raw.github.com/lightblue-platform/lightblue-core/master/metadata/src/main/resources/json-schema/metadata/metadata.json) for the given entity name and version.
 
 ### Response: Errors
 Additional error codes:

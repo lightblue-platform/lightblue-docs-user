@@ -13,7 +13,7 @@ to create the schema before trying to insert any data (the project require a def
 any data be inserted, so it DOESN'T create schema automatically based on the insert).
 
 ### Request
-Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/crud.json).
 
 Insert new data for given entity and specific version.
 ```
@@ -29,7 +29,7 @@ PUT /data/{entityName}
 ```
 
 ### Response: Success
-On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/response.json).
+On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/response.json).
 
 ### Response: Errors
 * crud:NoAccess - caller doesn't have access required to insert the document
@@ -81,7 +81,7 @@ PUT /data/insert/country/1.0.0
 Replace the contents of the given documents with new data.  See [Save](../language_specification/data.html#save) in the Language Spec for details of the document posted.
 
 ### Request
-Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/crud.json).
 
 Save data for given entity and specific version.
 ```
@@ -97,7 +97,7 @@ POST /data/save/{entityName}
 ```
 
 ### Response: Success
-On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/response.json).
+On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/response.json).
 
 ### Response: Errors
 * crud:NoAccess - caller doesn't have access required to save the document
@@ -109,7 +109,7 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 Update subset of documents based on the given query.  See [Update](../language_specification/data.html#update) in the Language Spec for details of the document posted.
 
 ### Request
-Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/crud.json).
 
 Update data for given entity and specific version.
 ```
@@ -125,7 +125,7 @@ POST /data/update/{entityName}
 ```
 
 ### Response: Success
-On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/response.json).
+On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/response.json).
 
 ### Response: Errors
 * crud:NoAccess - caller doesn't have access required to save the document
@@ -138,7 +138,7 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 Delete documents based on the given query.  See [[Delete|Language-Spec-Data#wiki-delete]] in the Language Spec for details of the document posted.
 
 ### Request
-Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/crud.json).
 
 Delete data for given entity and specific version.
 ```
@@ -154,7 +154,7 @@ POST /data/delete/{entityName}
 ```
 
 ### Response: Success
-On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/response.json).
+On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/response.json).
 
 ### Response: Errors
 * crud:NoAccess - caller doesn't have access required to save the document
@@ -202,7 +202,7 @@ If from is not given, result set starts from 0. If to is not given, all results 
 Find documents based on the given query.  See [Find](../language_specification/data.html#find) in the Language Spec for details of the document posted.  Note that if caller requests a field they are not authroized to access the request will not fail.  Instead the field will simply not be returned in the response.
 
 ### Request
-Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/crud.json).
 
 Find data for given entity and version.
 ```
@@ -218,7 +218,7 @@ POST /data/find/{entityName}
 ```
 
 ### Response: Success
-On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue/master/lightblue-core/crud/src/main/resources/json-schema/response.json).
+On success returns a [response JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/response.json).
 
 ### Response: Errors
 * crud:NoAccess - caller doesn't have access required to save the document
