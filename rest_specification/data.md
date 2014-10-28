@@ -53,7 +53,7 @@ PUT /data/insert/country/1.0.0
             "iso3code": "CAN"
         }
     ],
-    "returning": [
+    "projection": [
         {
             "field": "*",
             include: true
@@ -67,7 +67,7 @@ PUT /data/insert/country/1.0.0
 {
     "status": "complete",
     "modifiedCount": 1,
-    "response": [
+    "processed": [
         {
             "name": "Canada",
             "iso2code": "CA",
@@ -239,7 +239,7 @@ POST /data/find/country/1.0.0
         "op": "=",
         "rvalue": "US"
     },
-    "returning": [
+    "projection": [
         {
             "field": "name",
             "include": true
@@ -257,7 +257,7 @@ POST /data/find/country/1.0.0
 {
     "status": "complete",
     "matchCount": 1,
-    "response": [
+    "processed": [
         {
             "name": "United States of America",
             "iso3Code": "USA"
