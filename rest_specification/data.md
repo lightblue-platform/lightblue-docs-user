@@ -17,14 +17,14 @@ Body of request is a JSON document matching the [request JSON schema](https://ra
 
 Insert new data for given entity and specific version.
 ```
-PUT /data/{entityName}/{version}
+PUT /data/insert/{entityName}/{version}
 {request JSON document}
 ```
 ---
 
 Insert new data for given entity in the default version.
 ```
-PUT /data/{entityName}
+PUT /data/insert/{entityName}
 {request JSON document}
 ```
 
