@@ -270,6 +270,18 @@ the first two elements of an array, use:
 Assuming that value(s) is inserted at the given index and the item at
 index and items after are shifted down
 
+Negative index values can be used to address array elements from the end of the array.
+Using this, it is possible to append and initialize object array elements.
+
+```
+   [ { "$append" : { "someArray" : {} }},
+     { "$set" : { "someArray.-1.someValue" : 1,
+                  "someArray.-1.otherValue" : "value" } } ]
+```
+
+Above example first appends an empty object to the field "someArray", then sets
+values in that element. The index -1 refers to the newly added element.
+
 
 ### Updating array elements:
 ```
