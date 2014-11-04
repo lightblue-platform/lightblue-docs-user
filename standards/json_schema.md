@@ -253,16 +253,17 @@ Merges the functionality of the "1 only" and "1 or more" examples.  Note the reu
 
 ###Schema Inheritance
 Glossary, to help this make more sense:
-extension - a schema that has extended one or more schemas
-extended schema - a schema that has been extended by another schema (extension)
 
-When defining the properties for a schema you can do a pseudo-inheritiance.  Use the allOf construct to indicate all the schemas that you wish to inherit from.  Keep in mind when writing schemas that the "additionalProperties" attribute applies only to immediate properties.  This has two impacts on this pseudo-inheritiance:
-the extended schemas will fail validation against a json document if additionalProperties is false and there are new properties introduced in the extension.
-the extension will fail validation if specifying additionalProperties as false unless all properties from the extended schemas are also included in the extension.
+* extension - a schema that has extended one or more schemas
+* extended schema - a schema that has been extended by another schema (extension)
+
+When defining the properties for a schema you can do a pseudo-inheritiance.  Use the `allOf` construct to indicate all the schemas that you wish to inherit from.  Keep in mind when writing schemas that the `additionalProperties` attribute applies only to immediate properties.  This has two impacts on this pseudo-inheritiance:
+* the extended schemas will fail validation against a json document if `additionalProperties` is false and there are new properties introduced in the extension.
+* the extension will fail validation if specifying `additionalProperties` as false unless all properties from the extended schemas are also included in the extension.
 
 This means:
-for schemas that are intended for extension, do not set additionalProperties to false.
-extensions include the extended schema's properties in properties.  You don't have to redefine the property, just include it with an empty body in the properties of the extension.
+* for schemas that are intended for extension, do not set `additionalProperties` to false.
+* extensions include the extended schema's properties in properties.  You don't have to redefine the property, just include it with an empty body in the properties of the extension.
 
 ####PROBLEMS
 If you remove a property from the extended schema the extension still has that property defined.  Defaults for the property are now applied and schema validation will still expect the property.  This means to remove a property from an extended schema you have to also be sure to remove it from all extensions.
