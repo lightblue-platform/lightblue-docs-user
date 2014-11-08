@@ -129,7 +129,7 @@ array of paths - each "path" starts with at least an entity name.  If there is n
     [
         {
             role: "user.credentials.read",
-            find: ["user.credentials.read"]
+            find: ["user.credentials"]
         }
     ]
 ```
