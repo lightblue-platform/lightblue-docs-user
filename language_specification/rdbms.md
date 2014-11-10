@@ -535,11 +535,11 @@ This field will enable you to  nform to lightblue which RDBMS Vendor is going to
 You can use this field to specify the relationship between the entity persisted as a document in lightblue and the tables envolved persisted in RDBMS. It must follow the below structure:
 ```
 {
-    "columnToFieldMap":{
+    "columnToFieldMap":[{
         "table": "t",
         "column": "c",
         "field": "f"
-    },
+    }],
     "joins": [{
         "tables": [{
           "name": "n",
