@@ -13,18 +13,18 @@ to create the schema before trying to insert any data (the project require a def
 any data be inserted, so it DOESN'T create schema automatically based on the insert).
 
 ### Request
-Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/insertRequest.json).
 
 Insert new data for given entity and specific version.
 ```
-PUT /data/{entityName}/{version}
+PUT /data/insert/{entityName}/{version}
 {request JSON document}
 ```
 ---
 
 Insert new data for given entity in the default version.
 ```
-PUT /data/{entityName}
+PUT /data/insert/{entityName}
 {request JSON document}
 ```
 
@@ -44,8 +44,8 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 PUT /data/insert/country/1.0.0
 
 {
-    "entity": "country",
-    "entityVersion": "1.0.0",
+    "objectType": "country",
+    "version": "1.0.0",
     "data": [
         {
             "name": "Canada",
@@ -81,7 +81,7 @@ PUT /data/insert/country/1.0.0
 Replace the contents of the given documents with new data.  See [Save](../language_specification/data.html#save) in the Language Spec for details of the document posted.
 
 ### Request
-Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/saveRequest.json).
 
 Save data for given entity and specific version.
 ```
@@ -109,7 +109,7 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 Update subset of documents based on the given query.  See [Update](../language_specification/data.html#update) in the Language Spec for details of the document posted.
 
 ### Request
-Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/updateRequest.json).
 
 Update data for given entity and specific version.
 ```
@@ -138,7 +138,7 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 Delete documents based on the given query.  See [[Delete|Language-Spec-Data#wiki-delete]] in the Language Spec for details of the document posted.
 
 ### Request
-Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/deleteRequest.json).
 
 Delete data for given entity and specific version.
 ```
@@ -202,7 +202,7 @@ If from is not given, result set starts from 0. If to is not given, all results 
 Find documents based on the given query.  See [Find](../language_specification/data.html#find) in the Language Spec for details of the document posted.  Note that if caller requests a field they are not authroized to access the request will not fail.  Instead the field will simply not be returned in the response.
 
 ### Request
-Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/crud.json).
+Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/findRequest.json).
 
 Find data for given entity and version.
 ```
@@ -232,8 +232,8 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 POST /data/find/country/1.0.0
 
 {
-    "entity": "country",
-    "entityVersion": "1.0.0",
+    "objectType": "country",
+    "version": "1.0.0",
     "query": {
         "field": "iso2code",
         "op": "=",
