@@ -131,6 +131,13 @@ Search for a login name, starting with a prefix, case insensitive:
         "options":"i"
     }
  ```
+
+### Array Queries
+
+There are two types of array queries. An array contains query checks
+if an array of primitive values contains some, all, or none of the
+given values.
+
 Search for a document where an array field contains "value1" and "value2"
 ```
     {
@@ -142,6 +149,13 @@ Search for a document where an array field contains "value1" and "value2"
         ]
     }
 ```
+
+An array match query evaluates a nested search criteria for all
+elements of an array. The array query evaluates to 'true' if at least
+one of the array element matches the nested query. The result is
+'false' if none of the array elements matches.The field names in the
+nested query are evaluated with respect to the array elements.
+
 Search for a document that contains an array with an object
 element with "item" field equals 1.
 ```
@@ -155,6 +169,11 @@ element with "item" field equals 1.
     }
 
 ```
+
+Note that a query decides whether a document will be included in the
+result set or not. If only the matching array elements are required,
+the search criteria used in the query should also be used in
+projection.
 
 ## Projection
 
