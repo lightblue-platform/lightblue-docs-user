@@ -11,7 +11,7 @@ An example configuration that has just the audit hook configration parser:
         "The remainder of the file is parsed by the implementation class"
     ],
     "type": "com.redhat.lightblue.mongo.config.MongoMetadataConfiguration",
-    "hookConfigurationParsers": ["com.redhat.lightblue.config.AuditHookConfigurationParser"],
+    "hookConfigurationParsers": ["com.redhat.lightblue.hook.audit.AuditHookConfigurationParser"],
     "dataSource": "metadata",
     "collection": "metadata"
 }
