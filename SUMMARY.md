@@ -21,6 +21,7 @@
        * [Create Metadata](cookbook/create_first_metadata.md)
        * [Insert Data](cookbook/insert_data.md)
        * [Find Data](cookbook/find_data.md)
+       * [Create a new Version](cookbook/create_a_new_version.md)
    * [Binary Data](cookbook/binary_data.md)
    * [Audit Hook](cookbook/audit_hook.md)
        * [Configure Audit Hook Parser](cookbook/configure_audit_hook_parser.md)
