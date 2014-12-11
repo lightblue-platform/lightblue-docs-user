@@ -1,12 +1,12 @@
 # Error
 
 All errors are reported using the following error object:
-```
+```javascript
 {
   "object_type" : "error",
   "context" : "c1/c2/c3/...",
   "errorCode" :  "SomeErrorCode",
-  "msg" : "Error message
+  "msg" : "Error message"
 }
 ```
 * object_type: Always "error"

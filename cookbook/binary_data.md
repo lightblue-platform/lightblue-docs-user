@@ -4,7 +4,7 @@ As of the writing of this encoding for binary data is up to the client.  This ex
 This is taken from the `BinaryTypeTest` class.
 
 ## Binary into JSON
-```
+```java
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import javax.xml.bind.DatatypeConverter;
@@ -29,7 +29,7 @@ String jsonString = "{\"binaryData\": \"" + encoded + "\"}";
 ```
 
 ## Binary from JSON
-```
+```java
 import javax.xml.bind.DatatypeConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;

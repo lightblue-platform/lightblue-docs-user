@@ -40,7 +40,7 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 ### Example: create country
 
 #### Request
-```
+```javascript
 PUT /data/insert/country/1.0.0
 
 {
@@ -56,14 +56,14 @@ PUT /data/insert/country/1.0.0
     "projection": [
         {
             "field": "*",
-            include: true
+            "include": true
         }
     ]
 }
 ```
 
 #### Response
-```
+```javascript
 {
     "status": "complete",
     "modifiedCount": 1,
@@ -228,7 +228,7 @@ On success returns a [response JSON document](https://raw.githubusercontent.com/
 ### Example: find country
 
 #### Request
-```
+```javascript
 POST /data/find/country/1.0.0
 
 {
@@ -253,7 +253,7 @@ POST /data/find/country/1.0.0
 ```
 
 #### Response
-```
+```javascript
 {
     "status": "complete",
     "matchCount": 1,
