@@ -21,5 +21,5 @@ An example configuration that has just the audit hook configration parser:
 
 ```
 lightblue::eap::module::hook_configuration_parsers:
-    - com.redhat.lightblue.config.AuditHookConfigurationParser
+    - com.redhat.lightblue.hook.audit.AuditHookConfigurationParser
 ```
