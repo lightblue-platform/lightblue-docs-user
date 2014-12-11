@@ -11,9 +11,9 @@ To use this module the user must:
 3. create metadata using the RDBMS datastore, referencing the JNDI above
 
 ### How it works
-To configure your entity’s data be persisted on a relational database, you need to create metadata that references a valid JNDI name for a datasource connection pool in [datasources.json](https://github.com/lightblue-platform/lightblue-rest/blob/master/etc/mongo/datasources.json). By default the datasource used is defined in the [Metadata’s schema](https://github.com/lightblue-platform/lightblue-core/blob/master/metadata/src/main/resources/json-schema/metadata/schema.json)).
+To configure your entity’s data be persisted on a relational database, you need to create metadata that references a valid JNDI name for a datasource connection pool in [datasources.json](https://github.com/lightblue-platform/lightblue-rest/blob/master/etc/jbossas/modules/com/redhat/lightblue/main/datasources.json). By default the datasource used is defined in the [Metadata’s schema](https://github.com/lightblue-platform/lightblue-core/blob/master/metadata/src/main/resources/json-schema/metadata/schema.json)).
 
-In the Schema of your metadata create an rdbms`field following [rdbms.json](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/rdbms.json). This field maps all the lightblue CRUD operations (insert, find, update, save, delete) so the entity can be properly handled by the lightblue RDBMS controller (mapped by [lightblue-crud.json](https://github.com/lightblue-platform/lightblue-rest/blob/master/etc/mongo/lightblue-crud.json)).
+In the Schema of your metadata create an rdbms`field following [rdbms.json](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/rdbms.json). This field maps all the lightblue CRUD operations (insert, find, update, save, delete) so the entity can be properly handled by the lightblue RDBMS controller (mapped by [lightblue-crud.json](https://github.com/lightblue-platform/lightblue-rest/blob/master/etc/jbossas/modules/com/redhat/lightblue/main/lightblue-crud.json)).
 
 A simple example of a new Entity Metadata that will use RDBMS for data persistence.  The JNDI name for the datasource is `rdbmsdata`:
 ```javascript
