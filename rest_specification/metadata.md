@@ -13,6 +13,7 @@ Get a "graph" of dependencies between entities.  Default versions are used unles
 Get dependencies for:
 * entityName - the name of entity
 * version - the specific version
+
 ```
 GET /metadata/{entityName}/{version}/dependencies
 ```
@@ -30,29 +31,29 @@ GET /metadata/dependencies
 ```
 ### Response: Success
 Returns an array of objects that follow this JSON structure.  Note there is no JSON-schema for this at this time, subject to change.
-```
+```javascript
 [
     {
-        name: <the entity>,
-        dependencies: [array of 'this' structure]
+        "name": entityName,
+        "dependencies": [array of 'this' structure]
     }
 ]
 ```
 
 #### Example: cyclic
-```
+```javascript
 [
     {
-        name: "foo",
-        dependencies: [
+        "name": "foo",
+        "dependencies": [
             {
-                name: "bar",
-                dependencies: [
+                "name": "bar",
+                "dependencies": [
                     {
-                        name: "baz"
+                        "name": "baz"
                     },
                     {
-                        name: "foo"
+                        "name": "foo"
                     }
                 ]
             }
@@ -90,46 +91,46 @@ GET /metadata/roles
 
 ### Response: Success
 Returns an array of objects that follow this JSON structure.  Note there is no JSON-schema for this at this time, subject to change.
-```
+```javascript
     [
         {
-            role: <the role>,
-            insert: [array of paths],
-            find: [array of paths],
-            update: [array of paths],
-            delete: [array of paths]
+            "role": the role,
+            "insert": [array of paths],
+            "find": [array of paths],
+            "update": [array of paths],
+            "delete": [array of paths]
         }
     ]
 ```
 array of paths - each "path" starts with at least an entity name.  If there is no sub-path it is access to the full entity.  If it contains a sub-path it is access to a specific field on that entity.
 
 #### Example: user.find
-```
+```javascript
     [
         {
-            role: "user.find",
-            find: ["user"]
+            "role": "user.find",
+            "find": ["user"]
         }
     ]
 ```
 #### Example: user.credentials.write
-```
+```javascript
     [
         {
-            role: "user.credentials.write",
-            insert: ["user.credentials"],
-            find: ["user.credentials"],
-            update: ["user.credentials"],
-            delete: ["user.credentials"]
+            "role": "user.credentials.write",
+            "insert": ["user.credentials"],
+            "find": ["user.credentials"],
+            "update": ["user.credentials"],
+            "delete": ["user.credentials"]
         }
     ]
 ```
 #### Example: user.credentials.read
-```
+```javascript
     [
         {
-            role: "user.credentials.read",
-            find: ["user.credentials"]
+            "role": "user.credentials.read",
+            "find": ["user.credentials"]
         }
     ]
 ```
@@ -168,13 +169,13 @@ GET /metadata/{entityName}
 
 ### Response: Success
 JSON document that is an array of version information objects.
-```
+```javascript
 [
-  {"version": <versionValue>,
-   "changelog":<text>,
-    "extendsVersions":[ <version>,...],
-    "status":"active"|"disabled"|"deprecated",
-    "defaultVersion":true|false
+  {"version": versionValue,
+   "changelog": string,
+    "extendsVersions": [ version, ...],
+    "status": "active"|"disabled"|"deprecated",
+    "defaultVersion": true|false
   },
     ...
 ]

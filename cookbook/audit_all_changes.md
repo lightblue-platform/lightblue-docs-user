@@ -10,7 +10,7 @@ A few things to note about this configuration:
 * there is no `projection` field specified in this example.  This is because this configuration is auditing all data changes to all fields.  Other examples will cover projections.
 * the `find` action was not included.  Including `find` would have a side effect of auditing any read operations against data.  This is included in case there is a case that it's useful, but in practice it is expected this won't be used much.
 
-```
+```javascript
 {
     "entityInfo": {
         "name": "country",

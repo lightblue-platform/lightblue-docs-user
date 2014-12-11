@@ -3,24 +3,24 @@
 ## Entity Metadata
 Entity metadata are stored in a collection named "metadata". Format of metadata is:
 
-```
+```javascript
 {
-    entityInfo: {
-        _id: String,
-        name: String,
-        hooks: [ hook ],
-        indexes: [ index ],
-        enums: [ enum ],
-        datastore :  datastore_info
+    "entityInfo": {
+        "_id": String,
+        "name": String,
+        "hooks": [ hook ],
+        "indexes": [ index ],
+        "enums": [ enum ],
+        "datastore":  datastore_info
     },
-    schema: {
-        _id: String,
-        name: String,
-        version: version,
-        status: Status,
-        access: entity_access,
-        fields: { fields_object },
-        constraints: [ constraint ]
+    "schema": {
+        "_id": String,
+        "name": String,
+        "version": version,
+        "status": Status,
+        "access": entity_access,
+        "fields": { fields_object },
+        "constraints": [ constraint ]
     }
 }
 ```
@@ -32,7 +32,7 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
   *  name: Name of the entity.  Name is the same in entityInfo and schema sections.
   *  hooks: array of individual hook objects
 
-```
+```javascript
     "hooks": [
         {
             "name": hook implementation name,
@@ -44,7 +44,7 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
 ```
    *  indexes: array of index information.  Each index is an array of fields to index
 
-```
+```javascript
     "indexes": [
         {
             "name": optional name of the index,
@@ -55,7 +55,7 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
 ```
    *  enums: definition of enumerations (aka value sets) that are referenced from schema
 
-```
+```javascript
     "enums": [
         {
             "name": name of the enumeration,
@@ -66,7 +66,7 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
 
    *  Datastore: Datastore object. The actual object implementation depends on the backend. Below is for mongoDB. collection field is required. Other fields are implementation specific.
 
-```
+```javascript
     "datastore" : {
         "backend" : "mongo",
         "datasource" : logical name for the datasource,
@@ -85,16 +85,17 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
      *  value - the version string [required]
      *  extendVersions - array of version values this version extends (implies merges) [optional]
      *  changelog - text describing the version  [required]
-```
-    "version" : {
-      "value": String
-      "extendVersions": [ String, ... ],
-      "changelog": String
-    }
+
+```javascript
+"version" : {
+    "value": String,
+    "extendVersions": [ String, ... ],
+    "changelog": String
+}
 ```
 
    * status: Entity metadata status
-```
+```javascript
     "status" : {
       "value": one of "active", "deprecated", or "disabled",
       "log": [
@@ -105,11 +106,11 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
 ```
    *  fields: object with fields that define the model for the entity.  Structure is based on json schema v4-draft.  See metadata schema.
    *  entity_access: entity access object. Determines the access rights of the entity
-```
-    "access" : {
-      "insert" : [role1, role2, ...],
-      "find" : [role1,role2,...],
-      "update" : [role1,role2,...],
+```javascript
+    "access": {
+      "insert": [role1, role2, ...],
+      "find": [role1,role2,...],
+      "update": [role1,role2,...],
       "delete": [role1,role2,...]
     }
 ```
@@ -121,8 +122,8 @@ parsers/handlers can be registered for processing. Each constraint is
 an object containing one field. The field name determines the
 constraint type. Depending on the constraint, the constraintInfo can
 be a simple value, an array, or an object:
-```
-       { "constraintName" : <constraintInfo>  }
+```javascript
+       { "constraintName" : constraintInfo  }
 ```
 
 
@@ -138,14 +139,14 @@ be a simple value, an array, or an object:
    * a container type: object, array
 * fields: If type=object, an array of field objects
 * items: If type=array, an object of the form:
-```
+```javascript
     "items" : {
       "type": type
       "fields" : { ... } (if type=object)
     }
 ```
 * reference: If type=object or array. If reference is present, fields and elements cannot be given. Determines a query, projection, and sort order for another entity to be inserted into the document
-```
+```javascript
     "reference" : {
       "entity": entityName,
       "versionValue": versionValue,
@@ -155,7 +156,7 @@ be a simple value, an array, or an object:
     }
 ```
 * access: field access object. Determines the access rights of the field
-```
+```javascript
     "access" : {
        "find" : [ role1, role2, ... ],
        "insert": [ role1, role2, ...],
@@ -168,34 +169,35 @@ be a simple value, an array, or an object:
   *  insert: If the caller does not have the required role, attempt to set field value during insertion will result in failed insert.
 *  constraints: array of field constraint objects
    *  minLength, maxLength for strings (minLength=1 is to be used to mean nonempty string)
-```
-    { "minLength" : <value> }
-    { "maxLength" : <value> }
+```javascript
+    { "minLength" : value }
+    { "maxLength" : value }
 ```
    *  minItems and maxItems limit number of items in an array.  Default is 0 to unlimited.
-```
-    { "minItems": <value> }
-    { "maxItems": <value> }
+```javascript
+    { "minItems": value }
+    { "maxItems": value }
 ```
    *  required: boolean indicating if the field is required, default is false.
-```
+```javascript
     { "required": true|false }
 ```
    * minimum/maximum (for number types)
-```
-    { "minimum" : <value> }
-    { "maximum" : <value> }
+```javascript
+    { "minimum": value }
+    { "maximum": value }
 ```
    *  enum reference where the enum name comes from entityInfo
-```
-    { "enum" : enum name }
+```javascript
+    { "enum": enum name }
 ```
    * references: denotes fields in other entities this field depends on. The constraint requires that if this field value is non-null, there must be an instance of entity with { entityField: thisField }
-```
-    { "references" : {
-           "entityName" : <entityName>,
-           "versionValue" : version.value
-           "entityField": <fieldName>
+```javascript
+    {
+        "references": {
+           "entityName": entityName,
+           "versionValue": version.value
+           "entityField": fieldName
         }
     }
 ```
@@ -203,12 +205,12 @@ be a simple value, an array, or an object:
 
 *  hooks: optional array of enums that define what hooks are triggered when CRUD operations are performed on this field. Hooks are invoked in the given sequence.
    *  Values can be "audit" or "publish" at this time.  See How will events for create, update, and delete be sent to the ESB?
-```
+```javascript
     {
-        "hooks":{
-            "insert":[<value1>...],
-            "update":[<value1>...],
-            "delete":[<value1>...]
+        "hooks": {
+            "insert":[value1...],
+            "update": [value1...],
+            "delete": [value1...]
         }
     }
 ```

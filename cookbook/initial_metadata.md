@@ -1,7 +1,7 @@
 # Initial Metadata
 This document uses a simplified version of a `country` entity.  This example has a few fields that are not indexed to make reading this document easier.
 
-```
+```javascript
 {
     "entityInfo": {
         "name": "country",

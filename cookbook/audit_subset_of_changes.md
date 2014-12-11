@@ -3,7 +3,7 @@ Let's take the "Audit All Changes" example and reduce what gets audited.  Let's 
 
 Projection details are documented in the [Query Language Specification](/language_specification/query.html#projection).  This example includes all fields and then excludes the iso2Code field.
 
-```
+```javascript
 {
     "entityInfo": {
         "name": "country",

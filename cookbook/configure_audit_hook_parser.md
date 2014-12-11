@@ -3,7 +3,7 @@ By default, no hooks are enabled.  To enable the audit hook the `metadata mediat
 
 An example configuration that has just the audit hook configration parser:
 
-```
+```json
 {
     "documentation": [
         "type - REQURED - the class implementing MetadataConfiguration interface",
