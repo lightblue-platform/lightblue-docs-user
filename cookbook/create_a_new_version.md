@@ -34,7 +34,8 @@ If you're using a version of lightblue older than 1.2 then you have to follow th
 3. Make the value of the `schema` element the top level document
     1. remove `entityInfo`
     2. remove top level currely braces
-    3. remove text "schema":
+    3. remove text `"schema":`
+4. Update version from `1.0.0` to `1.1.0`
 4. Save the file
 
 Create a new schema with `curl`:
