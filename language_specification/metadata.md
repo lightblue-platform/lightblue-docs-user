@@ -11,7 +11,8 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
         "hooks": [ hook ],
         "indexes": [ index ],
         "enums": [ enum ],
-        "datastore":  datastore_info
+        "datastore":  datastore_info,
+        "defaultVersion": string
     },
     "schema": {
         "_id": String,
@@ -28,9 +29,9 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
 ## Entity Info
 
 * entityInfo: data about an entity that is not versioned
-  *  _id: &lt;name&gt;|
-  *  name: Name of the entity.  Name is the same in entityInfo and schema sections.
-  *  hooks: array of individual hook objects
+  *  `_id`: &lt;name&gt;|
+  *  `name`: Name of the entity.  Name is the same in entityInfo and schema sections.
+  *  `hooks`: array of individual hook objects
 
 ```javascript
     "hooks": [
@@ -42,7 +43,7 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
         }
     ]
 ```
-   *  indexes: array of index information.  Each index is an array of fields to index
+   *  `indexes`: array of index information.  Each index is an array of fields to index
 
 ```javascript
     "indexes": [
@@ -53,7 +54,7 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
         }
     ]
 ```
-   *  enums: definition of enumerations (aka value sets) that are referenced from schema
+   *  `enums`: definition of enumerations (aka value sets) that are referenced from schema
 
 ```javascript
     "enums": [
@@ -64,7 +65,7 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
     ]
 ```
 
-   *  Datastore: Datastore object. The actual object implementation depends on the backend. Below is for mongoDB. collection field is required. Other fields are implementation specific.
+   *  `datastore`: Datastore object. The actual object implementation depends on the backend. Below is for mongoDB. collection field is required. Other fields are implementation specific.
 
 ```javascript
     "datastore" : {
@@ -74,6 +75,8 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
         "collection" : collection name
     }
 ```
+
+* `defaultVersion`: Optional field that indicate the version of the entity used by default if no version is specified by the client.  Note that if this field is not set and the client does not supply a version the request will fail.
 
 
 ## Schema
