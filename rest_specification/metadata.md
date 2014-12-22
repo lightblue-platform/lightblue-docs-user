@@ -204,8 +204,8 @@ Additional error codes:
 * metadata:NoEntityName - no entity name specified
 * metadata:NoEntityVersion - no entity version specified
 
-## PUT: Create New Metadata
-Create a new entity by defining a new metadata.
+## PUT: Create New Metadata/Update metadata
+Create a new entity by defining a new metadata, or updates existing metadata by creating a new version of schema. If the entity that is passed in by the request already exists, but the schema version does not exist, the entity info is updated, and a new version of the schema is created. If the entity does not exist, the new entity is created.
 
 ### Request
 Two path params on the request representing the entity name and version.
