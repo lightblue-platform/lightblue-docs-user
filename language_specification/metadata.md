@@ -11,7 +11,8 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
         "hooks": [ hook ],
         "indexes": [ index ],
         "enums": [ enum ],
-        "datastore":  datastore_info
+        "datastore":  datastore_info,
+        "defaultVersion": string
     },
     "schema": {
         "_id": String,
@@ -28,9 +29,9 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
 ## Entity Info
 
 * entityInfo: data about an entity that is not versioned
-  *  _id: &lt;name&gt;|
-  *  name: Name of the entity.  Name is the same in entityInfo and schema sections.
-  *  hooks: array of individual hook objects
+  *  `_id`: &lt;name&gt;|
+  *  `name`: Name of the entity.  Name is the same in entityInfo and schema sections.
+  *  `hooks`: array of individual hook objects
 
 ```javascript
     "hooks": [
@@ -42,7 +43,7 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
         }
     ]
 ```
-   *  indexes: array of index information.  Each index is an array of fields to index
+   *  `indexes`: array of index information.  Each index is an array of fields to index
 
 ```javascript
     "indexes": [
@@ -53,7 +54,7 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
         }
     ]
 ```
-   *  enums: definition of enumerations (aka value sets) that are referenced from schema
+   *  `enums`: definition of enumerations (aka value sets) that are referenced from schema
 
 ```javascript
     "enums": [
@@ -64,7 +65,7 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
     ]
 ```
 
-   *  Datastore: Datastore object. The actual object implementation depends on the backend. Below is for mongoDB. collection field is required. Other fields are implementation specific.
+   *  `datastore`: Datastore object. The actual object implementation depends on the backend. Below is for mongoDB. collection field is required. Other fields are implementation specific.
 
 ```javascript
     "datastore" : {
@@ -74,6 +75,8 @@ Entity metadata are stored in a collection named "metadata". Format of metadata 
         "collection" : collection name
     }
 ```
+
+* `defaultVersion`: Optional field that indicate the version of the entity used by default if no version is specified by the client.  Note that if this field is not set and the client does not supply a version the request will fail.
 
 
 ## Schema
@@ -134,7 +137,7 @@ be a simple value, an array, or an object:
    *  basic types: boolean, integer (64-bit int), string, double, biginteger, bigdecimal, date, binary, uid
        * If a field is defined as biginteger, or bigdecimal in metadata, store the value as string, and don't allow &lt; &gt; operators during search.operators are not supported for this field during search.
        * binary - an open-ended data type for storing binary data, it is recommended that each use of this field clearly indicates what encoding is used.  For example, in java using DatatypeConverter.printBase64Binary(byte[]) the encoding spec is http://www.w3.org/TR/xmlschema-2/#base64Binary.  Note there are limits on document sizes, see [MongoDB Limits and Thresholds](http://docs.mongodb.org/manual/reference/limits/#BSON-Document-Size) documentation.
-       * uid - unique identifier field that can be used anywhere within a document, specifically created to support identity of array elements
+       * uid - unique identifier field that can be used anywhere within a document, specifically created to support identity of array elements. If an uid field is not initialized or null, then upon inserting/updating the document, the uid field is initialized to a unique string value. If a uid field has value during insert/update, it is not modified.
    * date: Re: How will we represent date in JSON?
    * a container type: object, array
 * fields: If type=object, an array of field objects
