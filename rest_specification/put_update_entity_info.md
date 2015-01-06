@@ -1,5 +1,5 @@
 # PUT: Update Entity Info
-Create an existing entity's info.
+Update an existing entity's info.
 
 ### Request
 One path param on the request representing the entity name.
