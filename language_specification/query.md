@@ -19,21 +19,21 @@ relational_expression := binary_relational_expression |
 
 binary_relational_expression := field_comparison_expression |
                                 value_comparison_expression
-field_comparison_expression := { field: <field>,
+field_comparison_expression := { "field": <field>,
                                  op: binary_comparison_operator,
-                                 rfield: <field> }
-value_comparison_expression := { field: <field>,
+                                 r"field": <field> }
+value_comparison_expression := { "field": <field>,
                                  op: binary_comparison_operator,
                                  rvalue: <value> }
 binary_comparison_operator := "=" | "!=" | "<" | ">" | "<=" | ">=" |
                               "$eq" | "$neq" | "$lt" | "$gt" | "$lte" | "$gte"
 
-nary_relational_expression := { field: <field>,
+nary_relational_expression := { "field": <field>,
                                 op: nary_comparison_operator,
                                 values: value_list_array }
 nary_comparison_operator := "$in" "$not_in" "$nin"
 
-regex_match_expression := { field: <field>, regex: <pattern>,
+regex_match_expression := { "field": <field>, regex: <pattern>,
                             caseInsensitive: false,
                             extended: false,
                             multiline: false,
@@ -51,61 +51,61 @@ value_list_array := [ value1, value2, ... ]
 Examples:
 
 Search documents with login=someuser:
-```
+```javascript
     {
-        "field":"login",
-        "op":"=",
-        "rvalue":"someuser"
+        "field": "login",
+        "op": "=",
+        "rvalue": "someuser"
     }
 ```
 Search documents whose firstname is not equal to lastname:
-```
+```javascript
     {
-        "field":"firstname",
-        "op":"$ne",
-        "rfield":"lastname"
+        "field": "firstname",
+        "op": "$ne",
+        "rfield": "lastname"
     }
 ```
 Logical expressions:
-```
+```javascript
     {
-        "$not":{
-            "field":"firstname",
-            "op":"$ne",
-            "rfield":"lastname"
+        "$not": {
+            "field": "firstname",
+            "op": "$ne",
+            "rfield": "lastname"
         }
     }
 ```
-```
+```javascript
     {
-        "$and":[
+        "$and": [
             {
-                "field":"firstname",
-                "op":"$ne",
-                "rfield":"lastname"
+                "field": "firstname",
+                "op": "$ne",
+                "rfield": "lastname"
             },
             {
-                "field":"login",
-                "op":"=",
-                "rvalue":"someuser"
+                "field": "login",
+                "op": "=",
+                "rvalue": "someuser"
             }
         ]
     }
 ```
 Can use "$all" instead of "$and".
 
-```
+```javascript
     {
-        "$or":[
+        "$or": [
             {
-                "field":"firstname",
-                "op":"$ne",
-                "rfield":"lastname"
+                "field": "firstname",
+                "op": "$ne",
+                "rfield": "lastname"
             },
             {
-                "field":"login",
-                "op":"=",
-                "rvalue":"someuser"
+                "field": "login",
+                "op": "=",
+                "rvalue": "someuser"
             }
         ]
     }
@@ -113,48 +113,67 @@ Can use "$all" instead of "$and".
 Can use "$any" instead of "$or".
 
 List of values:
-```
+```javascript
     {
-        "field":"city",
-        "op":"$in",
-        "values":[
+        "field": "city",
+        "op": "$in",
+        "values": [
             "Raleigh",
             "Cary"
         ]
     }
 ```
 Search for a login name, starting with a prefix, case insensitive:
-```
+```javascript
     {
-        "field":"login",
-        "regex":"prefix.*",
-        "options":"i"
+        "field": "login",
+        "regex": "prefix.*",
+        "options": "i"
     }
  ```
+
+### Array Queries
+
+There are two types of array queries. An array contains query checks
+if an array of primitive values contains some, all, or none of the
+given values.
+
 Search for a document where an array field contains "value1" and "value2"
-```
+```javascript
     {
-        "array":"someArray",
-        "contains":"$all",
-        "values":[
+        "array": "someArray",
+        "contains": "$all",
+        "values": [
             "value1",
             "value2"
         ]
     }
 ```
+
+An array match query evaluates a nested search criteria for all
+elements of an array. The array query evaluates to 'true' if at least
+one of the array element matches the nested query. The result is
+'false' if none of the array elements matches.The field names in the
+nested query are evaluated with respect to the array elements.
+
 Search for a document that contains an array with an object
 element with "item" field equals 1.
-```
+```javascript
     {
-        "array":"someArray",
-        "elemMatch":{
-            "field":"item",
-            "op":"=",
-            "rvalue":"1"
+        "array": "someArray",
+        "elemMatch": {
+            "field": "item",
+            "op": "=",
+            "rvalue": "1"
         }
     }
 
 ```
+
+Note that a query decides whether a document will be included in the
+result set or not. If only the matching array elements are required,
+the search criteria used in the query should also be used in
+projection.
 
 ## Projection
 
@@ -163,62 +182,84 @@ a query. It is illegal to pass an empty projection specification. The
 caller has to explicitly specify what fields are required. Caller can
 specify patterns instead of listing fields individually.
 
-Projection rules are executed in the order given. If an included field
-is later excluded by a projection rule, the field remains excluded,
-and vice versa.
+Projection rules are executed in the order given. The last projection
+expression that decides whether a field should be included or excluded
+wins.  If an included field is later excluded by a projection rule,
+the field remains excluded, and vice versa.
 
 ```
 projection := basic_projection | [ basic_projection, ... ]
 basic_projection := field_projection | array_projection
 
-field_projection := { field: <pattern>, include: boolean, recursive: boolean }
-array_projection := { field: <pattern>, include: boolean,
-                      match: query_expression, project : projection  } }  |
-                    { field: <pattern>, include: boolean,
-                      range: [ from, to ], project : projection }
+field_projection := { "field": <pattern>, "include": boolean, recursive: boolean }
+array_projection := { "field": <pattern>, "include": boolean,
+                      match: query_expression, project : projection, sort : sort  } }  |
+                    { "field": <pattern>, "include": boolean,
+                      "range": [ from, to ], project : projection, "sort": sort }
 ```
 Examples:
 
 Return firstname and lastname:
-```
- [ {  field: "firstname", include: true },
-   { field: "lastname", include: true } ]
+```javascript
+ [ { "field": "firstname", "include": true },
+   { "field": "lastname", "include": true } ]
 ```
 Return everything but firstname:
-```
- [ { field: "*", include: true, recursive: true},
-   { field: "firstname", include: false} ]
+```javascript
+ [ { "field": "*", "include": true, "recursive": true},
+   { "field": "firstname", "include": false} ]
 ```
 Return only those elements of the addresses array with
 city="Raleigh", and only return the streetaddress field.
-```
- [ { field: "address.*", include: true,
-     match: { city="Raleigh" }, project: { "streetaddress": true} } ]
+```javascript
+ [ { "field": "address", "include": true,
+     "match": { "city": "Raleigh" }, "project": { "streetaddress": true} } ]
 ```
 Return the first 5 addresses
-```
- [ { field: "address.*", include: true, range: [ 0, 4 ],
-     project: { "*", recursive: true} }]
+```javascript
+ [ { "field": "address", "include": true, "range": [ 0, 4 ],
+     "project": { "*", "recursive": true} }]
 ```
 
-## Sort
+### Sorting array elements in projection
+
+Array elements can be sorted in projections using an optional "sort" expression.
+The field references in that sort expression are evaluated with respect to the
+array elements. One thing to note is that the array elements are only sorted
+if the array projection expression is the projection that selects the array element.
+For instance:
+
+```javascript
+ [ { "field": "someArray", "include": true, "range": [0,2], "sort": {"someField":"$asc"} },
+   { "field": "*", "include": true } ]
 ```
+In this projection expression, the second projecting term '{"field":"*", "include":true }'
+projects the array 'someArray', thus the elements are not sorted. Whereas:
+
+```javascript
+ [  { "field": "*", "include": true },
+    { "field": "someArray", "include": true, "range": [0,2], "sort": {"someField":"$asc"} } ]
+```
+Here, both projection expression include "someArray", but the latest inclusion contains the sort, so the array elements are sorted.
+
+## Sort
+```javascript
 sort := sort_key | [ sort_key, ... ]
-sort_key := { field : "$asc" | "$desc" }
+sort_key := { "field": "$asc" | "$desc" }
 ```
 Examples:
 
 Sort by login ascending:
-```
+```javascript
     { "login":"asc" }
 ```
 Sort by last update date descending, then login ascending
-```
+```javascript
     [ { "lastUpdateDate":"desc" }, { "login": "asc" }]
 ```
 
 ## Update
-```
+```javascript
 update_expression := partial_update_expression |
                     [ partial_update_expression,...]
 partial_update_expression := primitive_update_expression |
@@ -242,38 +283,50 @@ foreach_update_expression := $remove | update_expression
 Modifications are executed in the order they're given, and effects are
 visible to subsequent operations immediately. For instance, to remove
 the first two elements of an array, use:
-```
+```javascript
     { "$unset" : [ "arr.0","arr.0" ] }
 ```
 
 ### Primitive updates
-```
-     { "$set" : { path : value } }
-     { "$set" : { path : { "$valueof" : field } }
-     { "$unset" : path }  (array index is supported, can be used to
+```javascript
+     { "$set" : { "path" : value } }
+     { "$set" : { "path" : { "$valueof" : field } }
+     { "$unset" : "path" }  (array index is supported, can be used to
                            remove elements of array)
-     { "$add" : { path : number } }
-     { "$add" : { path : { "$valueof" : pathToNumericField } }
+     { "$add" : { "path" : number } }
+     { "$add" : { "path" : { "$valueof" : pathToNumericField } }
 ```
 
 ### Array updates:
-```
-     { "$append" : { pathToArray : [ values ] } } (values can be empty
+```javascript
+     { "$append" : { "pathToArray" : [ values ] } } (values can be empty
                       objects (extend array with a  new element)
 
-     { "$append" : { pathToArray : value } }
+     { "$append" : { "pathToArray" : value } }
 
-     { "$insert" : { pathToArray.n : [ values ] } }
-     { "$insert" : { pathToArray.n : value } } (index (n) can be negative)
+     { "$insert" : { "pathToArray.n" : [ values ] } }
+     { "$insert" : { "pathToArray.n" : value } } (index (n) can be negative)
 ```
 
 Assuming that value(s) is inserted at the given index and the item at
 index and items after are shifted down
 
+Negative index values can be used to address array elements from the end of the array.
+Using this, it is possible to append and initialize object array elements.
+
+```javascript
+   [ { "$append" : { "someArray" : {} }},
+     { "$set" : { "someArray.-1.someValue" : 1,
+                  "someArray.-1.otherValue" : "value" } } ]
+```
+
+Above example first appends an empty object to the field "someArray", then sets
+values in that element. The index -1 refers to the newly added element.
+
 
 ### Updating array elements:
-```
-  { "$foreach" : { pathToArray : query_expression,
+```javascript
+  { "$foreach" : { "pathToArray" : query_expression,
                    "$update": update_expression } }
 ```
 
@@ -281,32 +334,48 @@ The query_expression determines the elements that will be
 updated. query_expression can be $all. update_expression can be
 $remove.
 
-Examples updating simple fields:
+#### Examples updating simple fields
+
+```javascript
+{ "$set": { "x.y.z" : newValue } }
 ```
-{ $set: { x.y.z : newValue } } : Update field x.y.z. x and y are objects.
-                                  z is a value.
+Update field x.y.z. x and y are objects and z is a value.
 
-{ $unset : x.y.z } : Remove x.y.z from doc. x and y are objects.
-                     z can be a value, object, or array.  x and y
-                     are not removed from the document, only z is removed
+---
 
-{ $add: { x.y.z : number } } : Similar to $set
+```javascript
+{ "$unset" : "x.y." }
 ```
+Remove x.y.z from doc.
+* x and y are objects.
+* z can be a value, object, or array.
+* x and y are not removed from the document, only z is removed
 
-Examples of $foreach:
+---
 
+```javascript
+{ "$add": { "x.y.z" : number } }
 ```
+$add is similar to $set
+
+#### Examples of $foreach
+
+```javascript
 { "$foreach" : { "x.y.*.z" : "$all", "$update": ... }  }
 ```
 Select all elements of the array x.y.*.z. Here, y is also an array.
 
-```
+---
+
+```javascript
 { "$foreach" : { "x.y.*.z" : { "field" : "x.y.*.z", "op":"$gt","rvalue":5 },
                  "$update":...  }}
 ```
 Select all elements of "x.y.*.z" that are greater than 5.
 
-```
+---
+
+```javascript
 { "$foreach" : { "x.y.*.z" : { "field" : "x.y.*.z.w", "op":"$eq","rfield":"k" },
                                "$update":... } }
 { "$foreach" : { "x.y.*.z" : { "field" : "$this.w", "op":"$eq","rfield":"k" },
@@ -315,24 +384,29 @@ Select all elements of "x.y.*.z" that are greater than 5.
 Select all elements of "x.y.*.z" where the field 'w' is
 equal to the top-level field 'k'.
 
-```$update``` specifies how each matching array element will be updated.
+`$update` specifies how each matching array element will be updated.
 The update expression itself may contain a $foreach.
 
-Example:
-```
+---
+
+```javascript
  { "$foreach" : { "x.y.*.z" : "$all",
                   "$update": { "$set" : { "$this" : 1 } } }
 ```
 Set all elements to 1
 
-```
+---
+
+```javascript
 { "$foreach" : { "x.y.*.z" : ...,
                  "$update" : { "$set" : { "$this.k" : "blah" } } }
 ```
 Set field 'k' in matching elements to 'blah' (".k" means
 "k relative to current context" )
 
-```
+---
+
+```javascript
 { "$foreach" : { "x.y.*.z" : ..... "$update" : {
            "$foreach" : { "$this.arr" : { "field" : "$this.p", "op":"$eq","rvalue":1},
 

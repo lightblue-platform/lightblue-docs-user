@@ -1,5 +1,6 @@
 # Summary
 
+* [Introduction](README.md)
 * [Language Specification](language_specification/README.md)
    * [Metadata](language_specification/metadata.md)
    * [Data](language_specification/data.md)
@@ -16,5 +17,12 @@
    * [JSON Style Guide](standards/style_guide.md)
 * [Cookbook](cookbook/README.md)
    * [Binary Data](cookbook/binary_data.md)
+   * [Audit Hook](cookbook/audit_hook.md)
+       * [Configure Audit Hook Parser](cookbook/configure_audit_hook_parser.md)
+       * [Initial Metadata](cookbook/initial_metadata.md)
+       * [Audit All Changes](cookbook/audit_all_changes.md)
+       * [Audit Subset of Changes](cookbook/audit_subset_of_changes.md)
    * [Custom Hook](cookbook/custom_hook.md)
+* [Tuning](tuning/README.md)
+   * [MongoDB](tuning/mongodb.md)
 

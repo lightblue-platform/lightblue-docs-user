@@ -43,7 +43,7 @@ For a full set of what is allowed see the json schema [1].
 
 ####Example: References
 References to to a property can be made by name and can be relative to a resource as noted in the "Identity" section of this document.  See how the property "target" is referenced by the property "source" and definition "origin" in this example below:
-```
+```javascriptjavascript
 {
     "$schema":"http://json-schema.org/draft-04/schema#",
     "properties":{
@@ -76,7 +76,7 @@ Basically the same as properties, but these are not available for use in a json 
 
 ####Example: References
 References to to a definition can be made by name and can be relative to a resource as noted in the "Identity" section of this document.  See how the definition "target" is referenced by the property "source" and the definition "origin" in this example below.
-```
+```javascript
 {
     "$schema":"http://json-schema.org/draft-04/schema#",
     "properties":{
@@ -182,7 +182,7 @@ The examples in this section will build off of each other, hence the ordering ma
 ####Example: 1 only
 Setting up a simple reference to a definition that is local to illustrate how you don't have to define the property contents directly as part of the property and setting up for further examples that will build on this.
 
-```
+```javascript
 {
     "$schema":"http://json-schema.org/draft-04/schema#",
     "properties":{
@@ -201,7 +201,7 @@ Setting up a simple reference to a definition that is local to illustrate how yo
 ####Example 2 or more
 An array requiriting 2 or more items, which reference the same definition used in the "1 only" example.
 
-```
+```javascript
 {
     "$schema":"http://json-schema.org/draft-04/schema#",
     "properties":{
@@ -224,7 +224,7 @@ An array requiriting 2 or more items, which reference the same definition used i
 ####Example 1 or more
 Merges the functionality of the "1 only" and "1 or more" examples.  Note the reuse of the item reference within the oneOf construct.  This is where the reference becomes most useful to have so the structure doesn't get defined more than once.
 
-```
+```javascript
 {
     "$schema":"http://json-schema.org/draft-04/schema#",
     "properties":{
@@ -253,22 +253,27 @@ Merges the functionality of the "1 only" and "1 or more" examples.  Note the reu
 
 ###Schema Inheritance
 Glossary, to help this make more sense:
-extension - a schema that has extended one or more schemas
-extended schema - a schema that has been extended by another schema (extension)
 
-When defining the properties for a schema you can do a pseudo-inheritiance.  Use the allOf construct to indicate all the schemas that you wish to inherit from.  Keep in mind when writing schemas that the "additionalProperties" attribute applies only to immediate properties.  This has two impacts on this pseudo-inheritiance:
-the extended schemas will fail validation against a json document if additionalProperties is false and there are new properties introduced in the extension.
-the extension will fail validation if specifying additionalProperties as false unless all properties from the extended schemas are also included in the extension.
+* extension - a schema that has extended one or more schemas
+* extended schema - a schema that has been extended by another schema (extension)
+
+When defining the properties for a schema you can do a pseudo-inheritiance.  Use the `allOf` construct to indicate all the schemas that you wish to inherit from.  If you want to set `additionalProperties` to `false` you must define the properties on the schema that is using `allOf`.  The `additionalProperties` attribute applies only to immediate (local) properties.  This has two impacts on this pseudo-inheritiance:
+* the extended schemas will fail validation against a json document if `additionalProperties` is false and there are new properties introduced in the extension.
+* the extension will fail validation if specifying `additionalProperties` as false unless all properties from the extended schemas are also included in the extension.
 
 This means:
-for schemas that are intended for extension, do not set additionalProperties to false.
-extensions include the extended schema's properties in properties.  You don't have to redefine the property, just include it with an empty body in the properties of the extension.
+* for schemas that are intended for extension, do not set `additionalProperties` to false.
+* extensions include the extended schema's properties in properties.  You don't have to redefine the property, just include it with an empty body in the properties of the extension.
+
+See the example for how this works.
 
 ####PROBLEMS
 If you remove a property from the extended schema the extension still has that property defined.  Defaults for the property are now applied and schema validation will still expect the property.  This means to remove a property from an extended schema you have to also be sure to remove it from all extensions.
 
 ####Example: Inheritance
-```
+In this example the `extension` property extends the `common` definition.  Note that `additionalProperties` is set to `false`.  This means that all properties from `common` must be defined on `extension`.  As you can see in the example, the one property `name` is defined with an empty body.
+
+```javascript
 {
     "$schema":"http://json-schema.org/draft-04/schema#",
     "properties":{
@@ -306,7 +311,7 @@ The best way to validate is to write a unit test, but sometimes you want to do a
 
 ###Abstract Java Test Class
 Maven dependencies:
-```
+```xml
 <dependency>
     <groupId>com.fasterxml.jackson.core</groupId>
     <artifactId>jackson-core</artifactId>
@@ -325,7 +330,7 @@ Maven dependencies:
 ```
 
 Only putting this here because the current source is likely to move.  This is the abstract class all of the current json schema unit tests use:
-```
+```java
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -448,7 +453,7 @@ We are not doing object generation.  Updates on tips welcome!
 When you need to do simple comparison of 2 json documents for equality (maybe after doing json2java then java2json) consider JSONAssert [12]. Can do non-strict JSON string comparisons (element order and extra fields ignored) very simply.  Strict comparison can be done as well, but that seems like a lot of extra work to get things in the same order again.
 
 For maven dependency see the quickstart: http://jsonassert.skyscreamer.org/quickstart.html
-```
+```java
 @Test
 public void jsonTest() throws Exception {
     String json1 = "{\"f1\":1,\"f2\":2}";

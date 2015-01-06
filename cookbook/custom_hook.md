@@ -52,7 +52,7 @@ To get this working, the `metadata mediator` needs to be configured. It knows ab
 
 At the most basic level the `lightblue-metadata.json` file in your lightblue module needs to be told about the parser.  It is set by putting a property `hookConfigurationParsers` that has an array of strings that are the full class names of each of the parsers.
 
-```
+```javascript
 {
     "documentation": [
         "type - REQURED - the class implementing MetadataConfiguration interface",

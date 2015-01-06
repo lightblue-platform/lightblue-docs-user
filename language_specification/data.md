@@ -7,12 +7,12 @@ object.
 
 ### Common: Request
 
-```
+```javascript
 {
-  entity: <entityName>,
-  entityVersion: <entity metadata version>,
-  client: <clientIdentification>,
-  execution: <executionOptions>
+  "entity": entityName,
+  "entityVersion": entityMetadataVersion,
+  "client": clientIdentification,
+  "execution": executionOptions
 }
 ```
 
@@ -24,7 +24,7 @@ object.
   information for the caller, which is auth implementation
   specific, or a session identifier obtained from an earlier call.
 * execution: Optional execution flags. If omitted, the call
-  is sycnchronous, and times out with partial completion if
+  is synchronous, and times out with partial completion if
   execution lasts longer than a preset limit.
   * timeLimit: The upper time limit for the call. If the call does
     not complete before the limit expires, call fails with partial
@@ -37,16 +37,16 @@ object.
 
 ### Common: Response
 
-```
+```javascript
 {
-  status: one of complete, partial, async, or error
-  modifiedCount: int
-  matchCount: int
-  taskHandle: sync
-  session:<sessionInfo>
-  processed: [ <entity data> ]
-  dataErrors: [ { data: <entity data>, errors: [ <errors> ] } ]
-  errors: [ <errors> ]
+  "status": one of complete, partial, async, or error,
+  "modifiedCount": int,
+  "matchCount": int,
+  "taskHandle": sync
+  "session": sessionInfo,
+  "processed": [ entityData ]
+  "dataErrors": [ { "data": entityData, "errors": [ errors ] } ]
+  "errors": [ errors ]
 }
 ```
 * status: enumerated field
@@ -77,11 +77,11 @@ object.
 ### Insert
 
 Request object:
-```
+```javascript
 {
-  <common stuff>
-  data: [ <entityData> ]
-  projection : <projection>
+  common stuff,
+  "data": [ entityData ],
+  "projection": projection
 }
 ```
 * data: Array of entity objects
@@ -95,12 +95,12 @@ Request object:
 Updates or inserts entities with the given ID.
 
 Request object:
-```
+```javascript
 {
-  <common stuff>
-  data: [ <entityData> ],
-  upsert: boolean
-  projection : <projection>
+  common stuff,
+  "data": [ entityData ],
+  "upsert": boolean,
+  "projection": projection
 }
 ```
 * data: Array of entity objects
@@ -118,12 +118,12 @@ Request object:
 Partially updates entities matching a search criteria
 
 Request object:
-```
+```javascript
 {
-  <common stuff>,
-  query: <query_expression,
-  update: <update_expression>
-  projection : <projection>
+  common stuff,
+  "query": query_expression,
+  "update": update_expression,
+  "projection": projection
 }
 ```
 * query: A query expression determining which documents to update
@@ -134,23 +134,23 @@ Request object:
 ### Delete
 
 Request object:
-```
+```javascript
 {
-  <common stuff>
-  query: <query_expression>,
+  common stuff,
+  "query": query_expression
 }
 ```
 
 ### Find
 
 Request object:
-```
+```javascript
 {
-  <common stuff>
-  query: <query_expression>,
-  projection: <projection>,
-  sort: <sort>,
-  range: [ from, to ]
+  common stuff,
+  "query": query_expression,
+  "projection": projection,
+  "sort": sort,
+  "range": [ from, to ]
 }
 ```
 * query: A non-empty query expression
