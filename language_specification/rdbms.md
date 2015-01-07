@@ -11,7 +11,7 @@ To use this module the user must:
 3. create metadata using the RDBMS datastore, referencing the JNDI above
 
 ### How it works
-To configure your entity’s data be persisted on a relational database, you need to create metadata that references a valid JNDI name for a datasource connection pool in [datasources.json](https://github.com/lightblue-platform/lightblue-rest/blob/master/etc/jbossas/modules/com/redhat/lightblue/main/datasources.json). By default the datasource used is defined in the [Metadata’s schema](https://github.com/lightblue-platform/lightblue-core/blob/master/metadata/src/main/resources/json-schema/metadata/schema.json)).
+To configure your entity's data be persisted on a relational database, you need to create metadata that references a valid JNDI name for a datasource connection pool in [datasources.json](https://github.com/lightblue-platform/lightblue-rest/blob/master/etc/jbossas/modules/com/redhat/lightblue/main/datasources.json). By default the datasource used is defined in the [Metadata's schema](https://github.com/lightblue-platform/lightblue-core/blob/master/metadata/src/main/resources/json-schema/metadata/schema.json)).
 
 In the Schema of your metadata create an rdbms`field following [rdbms.json](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/rdbms.json). This field maps all the lightblue CRUD operations (insert, find, update, save, delete) so the entity can be properly handled by the lightblue RDBMS controller (mapped by [lightblue-crud.json](https://github.com/lightblue-platform/lightblue-rest/blob/master/etc/jbossas/modules/com/redhat/lightblue/main/lightblue-crud.json)).
 
@@ -183,7 +183,7 @@ This field holds an array of:
 ```
 
 ## RDBMS: a deep dive
-As already discussed some details around the RDBMS module, now we will focus about its schema. An example of the format of [rdbms](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/rdbms.json) is:
+As already discussed some details around the RDBMS module, now we will focus about its schema. An example of the format of [rdbms](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/rdbms.json) is:
 ```javascript
 {
     "delete": operation,
@@ -200,7 +200,7 @@ As already discussed some details around the RDBMS module, now we will focus abo
 The schema have a contraint that at least one of those fields must be declared (empty object will result on a error message in the response). Lightblue will evaluate during the runtime if the operation requested is informed in the Entity's RDBMS object, if it wasn't informed before hand in the specific version and error message will be returned. If you have an entity persisted that will need all the Lightblue operations you should declare all the fields.
 
 ### operation
-Each RDBMS's [operation](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) must follow the below structure:
+Each RDBMS's [operation](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) must follow the below structure:
 ```javascript
 {
     "bindings":    bindings,
@@ -211,7 +211,7 @@ Each RDBMS's [operation](https://github.com/lightblue-platform/lightblue/blob/ma
 * `expressions`: An array of Expression objects. Required to be declared. It will be used to evaluate some logic conditionals, iterate over a field (from binding or from the entity) and also run SQL statements
 
 ### Bindings
-The [bindings](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) must follow the below structure:
+The [bindings](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) must follow the below structure:
 ```javascript
 {
     "in" : [InOut],
@@ -224,7 +224,7 @@ The [bindings](https://github.com/lightblue-platform/lightblue/blob/master/light
 This part of the schema requires that you at least declare `in` or `out` field, if you declared a bindings object.
 
 ### InOut
-The [InOut](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) must follow the below structure:
+The [InOut](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) must follow the below structure:
 ```javascript
 {
     "column": string,
@@ -235,7 +235,7 @@ The [InOut](https://github.com/lightblue-platform/lightblue/blob/master/lightblu
 * `field`: is a String. It will get the information from a Entity's field to be used with 'in' field or the other way round, the field can be filled with the value from the result of an SQL statement.
 
 ### expressions
-Each RDBMS's [expression element of the array](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can be one of the following objects:
+Each RDBMS's [expression element of the array](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can be one of the following objects:
 ```javascript
 {
     "statement": statement
@@ -268,7 +268,7 @@ Each RDBMS's [expression element of the array](https://github.com/lightblue-plat
 An expression must follow one of those structures above, otherwise it won't be valid.
 
 ### statement
-The [statement](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can defined as the following structure:
+The [statement](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can defined as the following structure:
 ```javascript
 {
     "sql": string,
@@ -279,7 +279,7 @@ The [statement](https://github.com/lightblue-platform/lightblue/blob/master/ligh
 * `type`: It represents the type of the SQL statement is. It must be one of the enum above and it is a required field.
 
 ### if et al
-The [if et al](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) follows thi structure:
+The [if et al](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) follows thi structure:
 ```javascript
 {
     "if":     conditional,
@@ -311,7 +311,7 @@ Where the `elseOrThen` is defined as following:
 
 
 ### conditional
-The [conditional](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) can be defined as one of following objects:
+The [conditional](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) can be defined as one of following objects:
 ```javascript
 {
     "or": [conditional]
@@ -369,7 +369,7 @@ The [conditional](https://github.com/lightblue-platform/lightblue/blob/master/li
 * The other fields are objects which will be described in more details in next sections
 
 ### fieldEmpty
-The [fieldEmpty](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+The [fieldEmpty](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```javascript
 {
     "field": String
@@ -378,7 +378,7 @@ The [fieldEmpty](https://github.com/lightblue-platform/lightblue/blob/master/lig
 * `field`: A required String that represents a field from the Entity or an inputed variable. If the evaluation of the field is empty, this conditional will return true, otherwise it will return false
 
 ### fieldCheckField
-The [fieldCheckField](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+The [fieldCheckField](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```javascript
 {
     "field": String,
@@ -391,7 +391,7 @@ The [fieldCheckField](https://github.com/lightblue-platform/lightblue/blob/maste
 * `rfield`: A required String that represents a field from the Entity or an inputed variable
 
 ### fieldCheckValue
-The [fieldCheckValue](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+The [fieldCheckValue](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```javascript
 {
     "field": String,
@@ -404,7 +404,7 @@ The [fieldCheckValue](https://github.com/lightblue-platform/lightblue/blob/maste
 * `value`: A required String that represents a simple value to be used to comparison
 
 ### fieldCheckValues
-The [fieldCheckValues](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+The [fieldCheckValues](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```javascript
 {
     "field": String,
@@ -417,7 +417,7 @@ The [fieldCheckValues](https://github.com/lightblue-platform/lightblue/blob/mast
 * `values`: An array of required String that represents a simple value to be used to comparison
 
 ### fieldRegex
-The [fieldRegex](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+The [fieldRegex](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```javascript
 {
     "field": String,
@@ -436,7 +436,7 @@ The [fieldRegex](https://github.com/lightblue-platform/lightblue/blob/master/lig
 * `dotall`: A non-required bolean field that can enable or disable the regex to match any character including a newline
 
 ### op
-The [op](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
+The [op](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/conditional.json) is structed as following:
 ```javascript
 "op": "eq"|"neq"|"lt"|"gt"|"lte"|"gte"|"in"|"nin"
 ```
@@ -450,7 +450,7 @@ The [op](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-r
 * `nin`: The not in operator. Example of [1,3] is in [0,2,4], so A nin B
 
 ### elseIf
-The [elseIf](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can be defined as following:
+The [elseIf](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can be defined as following:
 ```javascript
 {
     "if": if,
@@ -462,7 +462,7 @@ The [elseIf](https://github.com/lightblue-platform/lightblue/blob/master/lightbl
 
 
 ### foreach
-The [foreach](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) is structed as following:
+The [foreach](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) is structed as following:
 ```javascript
 {
     "iterateOverField": String,
@@ -473,7 +473,7 @@ The [foreach](https://github.com/lightblue-platform/lightblue/blob/master/lightb
 * `expressions`: Required expressions object. These expressions will be evaluated for each value from iterateOverField field
 
 ### for
-The [for](https://github.com/lightblue-platform/lightblue/blob/master/lightblue-rdbms/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can be defined as following:
+The [for](https://github.com/lightblue-platform/lightblue-rdbms/blob/master/metadata/src/main/resources/json-schema/metadata/rdbms/model/operation.json) can be defined as following:
 ```javascript
 {
     "loopTimes": number,

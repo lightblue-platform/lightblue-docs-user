@@ -1,5 +1,5 @@
 # POST: Delete Data
-Delete documents based on the given query.  See [[Delete|Language-Spec-Data#wiki-delete]] in the Language Spec for details of the document posted.
+Delete documents based on the given query.  See [Delete](http://docs.lightblue.io/language_specification/data.html#delete) in the Language Spec for details of the document posted.
 
 ### Request
 Body of request is a JSON document matching the [request JSON schema](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/crud/src/main/resources/json-schema/deleteRequest.json).
