@@ -8,7 +8,7 @@ DELETE /metadata/{entityName}/default
 ```
 
 ### Response: Success
-The [entityInfo JSON document](https://github.com/lightblue-platform/lightblue/wiki/Language-Spec-Metadata#entity-info) for the given entity name.
+The [entityInfo JSON document](https://raw.githubusercontent.com/lightblue-platform/lightblue-core/master/metadata/src/main/resources/json-schema/metadata/entityInfo.json) for the given entity name.
 
 ### Response: Errors
 Additional error codes:
