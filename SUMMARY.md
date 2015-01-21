@@ -39,7 +39,7 @@
    * [JSON Style Guide](standards/style_guide.md)
 * [Cookbook](cookbook/README.md)
    * [Quickstart](cookbook/quickstart.md)
-       * [Install lightblue on OpenShift](cookbook/install_lightblue_on_openshift.md)
+       * [Install on OpenShift](cookbook/install_lightblue_on_openshift.md)
        * [Create Metadata](cookbook/create_first_metadata.md)
        * [Insert Data](cookbook/insert_data.md)
        * [Find Data](cookbook/find_data.md)
