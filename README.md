@@ -52,7 +52,7 @@ Clients do not care where data is stored as long as it is available and secure. 
 Not seeing a contoller you need?  We welcome new implementations and contributions in general!  From opening a request for enhancement to writing code, your ideas and help are greatly appricated.
 
 #### Versioned Metadata
-All data in lightblue is controlled by its metadata.  Think of this as all the DDL for a table in a relational database.  
+All data in lightblue is controlled by its metadata.  Think of this as all the DDL for a table in a relational database.
 A specific version of this metadata provides a view of the stored data.  You can have many versions of metadata active at a time, providing different clients with different views of this data.  Key points to remember:
 * all data structures are captured as metadata
 * each data stucture can have multiple versions active at a time

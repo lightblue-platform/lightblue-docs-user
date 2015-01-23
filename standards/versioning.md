@@ -4,14 +4,13 @@ The metadata service enforces some standards around versioning.  The standard, r
 ## Standard: Common
 The key words "MUST", "MUST NOT", "SHOULD", "SHOULD NOT", and "MAY" in this document are to be interpreted as described in RFC 2119.
 
-* All versions MUST follow Semantic Versioning 2.0.0 except where deviations are documented in this standard.
+* All versions MUST follow [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html) except where deviations are documented in this standard.
 * Pre-release versions MUST NOT be used in non-development environments.
 * A pre-release version of "SNAPSHOT" MAY be used as a basis for artifacts not ready for release.
 * Versions without a pre-release are called "production versions" in this documentation.
 
 ## Standard: Application
-* All API artifacts MUST NOT include a PATCH component to the version.
-* All artifacts MUST be versioned together where API artifacts take the MAJOR and MINOR versions only.
+* All artifacts MUST follow [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html)
 
 ## Standard: Metadata
 * Version uniqueness MUST be guaranteed per entity.
@@ -22,14 +21,6 @@ The key words "MUST", "MUST NOT", "SHOULD", "SHOULD NOT", and "MAY" in this docu
 * If metadata MAJOR version is greater than the maximum MAJOR extended version:
     * MINOR version must be 0 (zero).
     * PATCH version must be 0 (zero).
-
-## Rational: Application
-Why API doens't include PATCH:
-* Keeping APIs as Major.Minor allows us to keep api versions unchanged for implementation only updates.
-* Any API artifact MUST not contain business logic.
-* Public documentation is independent of API source.
-
-If the API changes in any way a minor or major version change is required.  This is an deliberate decision and is intended to protection clients of the service.
 
 ## Rational: Metadata
 Each entity's metadata is versioned in isolation to others, therefore versions are unique to that entity, not to all metadata.
@@ -43,7 +34,7 @@ Note this does not account for collision of versions when there are multiple ext
 In the case above the 1.0.1-SNAPSHOT versions are not unique.
 
 ### Create
-1. Create new entity, initial version is 0.1.0-SNAPSHOT
+1. Create new entity, initial version is ideally 0.1.0-SNAPSHOT
 1. Develop new entity...
 1. Cut release version 1.0.0
 
