@@ -2,7 +2,7 @@
 This article aims to give an overview about the RDBMS module, describe its propose and give some fine details of usage.
 
 ## RDBMS Overview
-Lightblue can have its data storaged in different kinds of databases due its flexible plugin-enabled architeture.  It just requires the implementation of the business logic to handle the specific data storage.
+Lightblue can have its data stored in different kinds of databases due its flexible plugin-enabled architeture.  It just requires the implementation of the business logic to handle the specific data storage.
 
 To use this module the user must:
 
