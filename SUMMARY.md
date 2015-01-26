@@ -1,6 +1,11 @@
 # Summary
 
 * [Introduction](README.md)
+* [Client Libraries](client_libraries/README.md)
+   * [Java Client](client_libraries/java_client.md)
+   * [Javascript Client](client_libraries/javascript_client.md)
+   * [Python Client](client_libraries/python_client.md)
+   * [Ruby Client](client_libraries/ruby_client.md)
 * [Language Specification](language_specification/README.md)
    * [Metadata](language_specification/metadata.md)
    * [Data](language_specification/data.md)
