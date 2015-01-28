@@ -1,6 +1,6 @@
 # LDAP
 ## Overview
-<a href="https://github.com/lightblue-platform/lightblue-ldap">Lightblue-LDAP</a> is a plugin that provides Lightblue the ability to store and retrieve data to/from <a href="http://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol">Lightweight Directory Access Protocol (LDAP)</a> backends.
+<a href="https://github.com/lightblue-platform/lightblue-ldap">Lightblue-LDAP</a> is a plugin that provides lightblue the ability to store and retrieve data to/from <a href="http://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol">Lightweight Directory Access Protocol (LDAP)</a> backends.
 
 This article explains how to configure the LDAP plugin and provides basic usage examples.
 
@@ -8,15 +8,15 @@ This article explains how to configure the LDAP plugin and provides basic usage 
 
 ### datasources.json
 
-In order to connect Lightblue to LDAP, you must first add a datasource to _datasources.json_.
+In order to connect lightblue to LDAP, you must first add a datasource to _datasources.json_.
 
-Multiple LDAP datasources can be used by adding additional blocks, each with a unique datasource and database name. 
+Multiple LDAP datasources can be used by adding additional blocks, each with a unique datasource and database name.
 
 **Attributes:**
  * **type** - Class path to the _DataSourceConfiguration_ implementation for LDAP. Should always be _com.redhat.lightblue.config.ldap.LdapDataSourceConfiguration_.
  * **database** - Arbitrary name for the database, used by metadata to reference the target database.
- * **bindableDn** - Similar to a username, this is the _dn_ used to authenticate into LDAP.
- * **password** - Password associated with the _bindableDn_.
+ * **bindabledn** - Similar to a username, this is the _dn_ used to authenticate into LDAP.
+ * **password** - Password associated with the _bindabledn_.
  * **numberOfInitialConnections** - _(optional)_ The number of connections to initially establish when the pool is created. Defaults to 5.
  * **maxNumberOfConnections** - _(optional)_ The maximum number of connections that should be maintained in the pool. Defaults to 10.
  * **servers** - A list of _host_ and _port_ numbers to connect to. At least one must be provided. Multiples indicate mirrors that can be equally read from and written to.
@@ -28,7 +28,7 @@ Example:
         "type" : "com.redhat.lightblue.config.ldap.LdapDataSourceConfiguration",
         "database" : "LdapDatabaseName",
 
-        "bindableDn" : "uid=admin,dc=example,dc=com",
+        "bindabledn" : "uid=admin,dc=example,dc=com",
         "password" : "secret",
         "numberOfInitialConnections" : 5,
         "maxNumberOfConnections" : 10,
@@ -119,7 +119,7 @@ In the following example, the LDAP attribute "LdapAttributeName" will be aliased
 
 Nothing too interesting here, as this follows the standard schema definition.
 
-From an LDAP perspective, you might notice that _dn_ and _objectClass_ are not included in the _fields_ list, and that is because they will automatically be added and available for CRUD operations. You are welcome to specify them yourself if you prefer, but it is unnecessary. 
+From an LDAP perspective, you might notice that _dn_ and _objectClass_ are not included in the _fields_ list, and that is because they will automatically be added and available for CRUD operations. You are welcome to specify them yourself if you prefer, but it is unnecessary.
 
 **NOTE:** The attribute identified as the _uniqueattr_ in the _entityInfo_ section is required to be defined in the _fields_ list.
 
