@@ -16,6 +16,7 @@
        * [Update](language_specification/update.md)
    * [Error](language_specification/error.md)
    * [RDBMS](language_specification/rdbms.md)
+   * [LDAP](language_specification/ldap.md)
 * [REST Specification](rest_specification/README.md)
    * [General](rest_specification/general.md)
    * [Metadata](rest_specification/metadata.md)
