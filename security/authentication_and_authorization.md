@@ -18,6 +18,7 @@ The metadata management application currently support SAML authentication.
 
 SAML authentication is enabled by configuring a JBoss security domain and deploying the SAML enabled version of the applications:
 * [lightblue-applications-metadata-mgmt-saml-auth](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.redhat.lightblue.applications%22%20AND%20a%3A%22metadata-mgmt-saml-auth%22)
+* Our SAML implementation uses a JBoss valve provided by the [Picketlink](http://picketlink.org) project, which is bundled with newer versions of JBoss.  If you're running an older version of JBoss, or trying to deploy this in a different container, consult the Pciketlink documentation for more information about how to use their libraries and make them accessible to your the Metadata Management Application. 
 
 Authorization for SAML is provided as roles on the SAML assertion.  These roles are all that will be used for authorization of the user in this scenario.
 
