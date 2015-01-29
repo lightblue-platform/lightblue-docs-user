@@ -63,4 +63,9 @@
    * [Custom Hook](cookbook/custom_hook.md)
 * [Tuning](tuning/README.md)
    * [MongoDB](tuning/mongodb.md)
+* [Security](security/README.md)
+   * [Unsecured Deployment](security/unsecured.md)
+   * [Encryption](security/encryption.md)
+   * [Authentication and Authorization](security/authentication_and_authorization.md)
+   * [Using Authorization](security/using_authorization.md)
 
