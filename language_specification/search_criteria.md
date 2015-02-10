@@ -16,16 +16,24 @@ binary_relational_expression := field_comparison_expression |
                                 value_comparison_expression
 field_comparison_expression := { "field": <field>,
                                  op: binary_comparison_operator,
-                                 r"field": <field> }
+                                 "rfield": <field> }
 value_comparison_expression := { "field": <field>,
                                  op: binary_comparison_operator,
                                  rvalue: <value> }
 binary_comparison_operator := "=" | "!=" | "<" | ">" | "<=" | ">=" |
                               "$eq" | "$neq" | "$lt" | "$gt" | "$lte" | "$gte"
 
-nary_relational_expression := { "field": <field>,
-                                op: nary_comparison_operator,
-                                values: value_list_array }
+nary_relational_expression := nary_value_relational_expression |
+                              nary_field_relational_expression
+
+nary_value_relational_expression := { "field": <field>,
+                                       op: nary_comparison_operator,
+                                       values: value_list_array } 
+
+nary_field_relational_expression := { "field": <field>,
+                                       op: nary_comparison_operator,
+                                       "rfield": <array_field> } 
+                              
 nary_comparison_operator := "$in" "$not_in" "$nin"
 
 regex_match_expression := { "field": <field>, regex: <pattern>,
@@ -61,6 +69,11 @@ Search documents whose firstname is not equal to lastname:
         "rfield": "lastname"
     }
 ```
+
+'field' and 'rfield' can be array fields, or simple fields.
+  * simpleField op arrayField evaluates to true if simpleField op arrayField[i] for all i
+  * arrayField1 op arrayField2 evaluates to true if arrayField1[i] op arrayField2[i] for all i
+
 Logical expressions:
 ```javascript
     {
@@ -118,6 +131,16 @@ List of values:
         ]
     }
 ```
+
+```javascript
+    {
+        "field": "city",
+        "op": "$in",
+        "rfield": "citiesArrayField"
+    }
+```
+
+
 Search for a login name, starting with a prefix, case insensitive:
 ```javascript
     {
