@@ -496,7 +496,7 @@ This field will enable you to  nform to lightblue which RDBMS Vendor is going to
 
 
 ### SQLMapping
-You can use this field to specify the relationship between the entity persisted as a document in lightblue and the tables envolved persisted in RDBMS. It must follow the below structure:
+You can use this field to specify the relationship between the entity persisted as a document in lightblue and the tables persisted in RDBMS. It must follow the below structure:
 ```javascript
 {
     "columnToFieldMap":[{
@@ -519,4 +519,4 @@ You can use this field to specify the relationship between the entity persisted 
 }
 ```
 * `columnToFieldMap`: Describe the relationship between eachfield to a column;
-* `joins`: Describe the tables, informing the necessary joins, sort alias, etc.
+* `joins`: Describe the tables, informing the necessary joins, sort alias, etc. Each object of this array will provide the tables that you want to map between the lightblue and the RDBMS using the tables field and with joinTablesStatement maps the lightblue entity's fields with the RDBMS columns
