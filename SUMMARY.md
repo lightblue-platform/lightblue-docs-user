@@ -25,6 +25,7 @@
        * [Audit All Changes](cookbook/audit_all_changes.md)
        * [Audit Subset of Changes](cookbook/audit_subset_of_changes.md)
    * [Custom Hook](cookbook/custom_hook.md)
+   * [Value Generators](cookbook/value_generators.md)
 * [Tuning](tuning/README.md)
    * [MongoDB](tuning/mongodb.md)
 * [Security](security/README.md)
