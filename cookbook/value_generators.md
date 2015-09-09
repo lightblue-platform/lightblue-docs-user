@@ -1,8 +1,10 @@
 # Value Generators
 
-If you want Lightblue to automatically populate fields (e.g. generate id or current date), then you need to define a value generator.
-
-All value generators have one common configuration flag called overwrite. When set to false (default), sets generated value only if the field of the inserted entity is not set or null. When true, populates the field with generated value regardless.
+If you want Lightblue to automatically populate fields (e.g. generate id or current date), then you need to define a value generator. Behavior:
+* if a field is not in the document and is not required, it won't be automatically populated,
+* if a field is required and it is not in the document, it'll be inserted and automatically populated,
+* if a field is set to null, it will be automatically populated (even if not required),
+* if overwrite configuration flag is set to true on the value generator, field will be populated even if it is initialized (already has a value). It will not be inserted if the field is not required and if the field does not exist in the document.
 
 Note: Value Generators are available since Lightblue version 1.7.0.
 
@@ -68,6 +70,9 @@ Create:
 ```json
             "creationDate": {
                 "type": "date",
+                "constraints": {
+                    "required": true
+                },
                 "valueGenerator": {
                     "type": "CurrentTime"
                 }
