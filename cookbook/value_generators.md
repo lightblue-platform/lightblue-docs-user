@@ -1,13 +1,28 @@
 # Value Generators
 
-If you want Lightblue to automatically populate a field which is not set or null (e.g. generate id or current date), then you need to define a value generator.
+If you want Lightblue to automatically populate fields (e.g. generate id or current date), then you need to define a value generator.
+
+All value generators have one common configuration flag called overwrite. When set to false (default), sets generated value only if the field of the inserted entity is not set or null. When true, populates the field with generated value regardless.
 
 Note: Value Generators are available since Lightblue version 1.7.0.
 
 Generator types available:
 ## UUID
 
-TBD
+Generates a value from ```java.util.UUID.randomUUID()```. Replaces uid type.
+
+```json
+            "_id": {
+                "type": "string",
+                "constraints": {
+                    "identity": true
+                },
+                "valueGenerator": {
+                    "type": "UUID"
+                }
+            },
+```
+
 
 ## IntSequence
 
@@ -25,9 +40,12 @@ Here is how _ids were defined so far:
 Uid type is about to be deprecated. UUID generator is to be used instead. Since this section is about IntSequence generator only, I will stop here.
 
 Here is how you can define IntSequence _id:
-```
+```json
             "_id": {
                 "type": "integer",
+                "constraints": {
+                    "identity": true
+                },
                 "valueGenerator": {
                     "type": "IntSequence",
                     "configuration": {
@@ -44,4 +62,28 @@ Here is how you can define IntSequence _id:
 
 ## CurrentTime
 
-TBD
+Uses ```new java.util.Date()``` to poulate the field.
+
+Create:
+```json
+            "creationDate": {
+                "type": "date",
+                "valueGenerator": {
+                    "type": "CurrentTime"
+                }
+            }
+```
+
+Update:
+```json
+            "updateTime": {
+                "type": "date",
+                "valueGenerator": {
+                    "type": "CurrentTime",
+                    "configuration": {
+                        "overwrite": true
+                    }
+                }
+            }
+```
+Note the overwrite flag.
