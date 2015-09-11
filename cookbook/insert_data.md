@@ -9,7 +9,7 @@ This section assumes:
 You can create metadata with `curl` if the metadata is in a file on the filesystem.  The following command creates some data for version `1.0.0` of the `country` entity.
 
 ```bash
-curl -H Content-Type:application/json -X PUT ${BASE_URL}/rest/data/country/1.0.0 -d @/tmp/country-data.json
+curl -H Content-Type:application/json -X PUT ${BASE_URL}/rest/data/insert/country/1.0.0 -d @/tmp/country-data.json
 ```
 
 ## Create via Data Management Application
