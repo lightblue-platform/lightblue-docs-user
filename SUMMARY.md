@@ -2,7 +2,8 @@
 
 * [Introduction](README.md)
 * [Client Libraries](client_libraries/README.md)
-   * [Java Client](client_libraries/java_client.md)
+   * [Java Client](client_libraries/java_client/README.md)
+       * [Unit Testing](client_libraries/java_client/unit_testing.md)
    * [Javascript Client](client_libraries/javascript_client.md)
    * [Python Client](client_libraries/python_client.md)
    * [Ruby Client](client_libraries/ruby_client.md)
@@ -26,7 +27,6 @@
        * [Audit All Changes](cookbook/audit_all_changes.md)
        * [Audit Subset of Changes](cookbook/audit_subset_of_changes.md)
    * [Custom Hook](cookbook/custom_hook.md)
-   * [Value Generators](cookbook/value_generators.md)
 * [Tuning](tuning/README.md)
    * [MongoDB](tuning/mongodb.md)
 * [Security](security/README.md)
@@ -34,4 +34,6 @@
    * [Encryption](security/encryption.md)
    * [Authentication and Authorization](security/authentication_and_authorization.md)
    * [Using Authorization](security/using_authorization.md)
+* [Unit Testing](unit_testing/README.md)
+   * [FAQ](unit_testing/faq.md)
 
