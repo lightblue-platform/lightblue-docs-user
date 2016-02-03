@@ -27,6 +27,7 @@
        * [Audit All Changes](cookbook/audit_all_changes.md)
        * [Audit Subset of Changes](cookbook/audit_subset_of_changes.md)
    * [Custom Hook](cookbook/custom_hook.md)
+   * [Plugins](cookbook/plugins.md)
 * [Tuning](tuning/README.md)
    * [MongoDB](tuning/mongodb.md)
 * [Security](security/README.md)
@@ -36,5 +37,4 @@
    * [Using Authorization](security/using_authorization.md)
 * [Unit Testing](unit_testing/README.md)
    * [FAQ](unit_testing/faq.md)
-
 
