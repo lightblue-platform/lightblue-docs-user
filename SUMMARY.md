@@ -28,6 +28,7 @@
        * [Audit Subset of Changes](cookbook/audit_subset_of_changes.md)
    * [Custom Hook](cookbook/custom_hook.md)
    * [Plugins](cookbook/plugins.md)
+   * [Controlling Read Preferences](cookbook/controlling_read_preferences.md)
 * [Tuning](tuning/README.md)
    * [MongoDB](tuning/mongodb.md)
 * [Security](security/README.md)
