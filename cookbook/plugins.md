@@ -27,4 +27,4 @@ Standard *lightblue-crud.json*, *lightblue-metadata.json*, and *datasources.json
 
 Include any jar files the plugin produces or any 3rd party libraries required by the plugin (eg. lightblue-mongo needs a mongo client in order to work).
 
-Do not include lightblue-core or any dependencies already provided by the lightblue runtime. 
+Do not include lightblue-core or any dependencies already provided by the lightblue runtime.
