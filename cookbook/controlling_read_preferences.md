@@ -1,6 +1,6 @@
 # Controlling Read Preferences
 
-Read preferences for distributed datastores is is managed by the individual datasource configuration.  Not every datastore will support a read preference since it's a function of distributed databases.
+Read preferences for distributed datastores is managed by the individual datasource configuration.  Not every datastore will support a read preference since it's a function of distributed databases.
 
 In the world of distributed there are two flavors we care about here:
 1. Multi Master
