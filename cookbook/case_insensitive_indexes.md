@@ -1,7 +1,7 @@
 # Case Insensitive Indexes
 Case insensitive (CI) indexes exist in Lightblue to support easier and more efficient regular expression matching on string fields.
 
-## Creating Case Insensitive Indexes
+## Creating CI Indexes
 ### Simple Fields
 CI indexes are as simple as creating any other index, just with one additional meta field
 ```javascript
@@ -61,9 +61,35 @@ The same is true for fields embedded in arrays or sub-objects.  Note that arrays
           ]
 ```
 
-## Querying Case Insensitive Indexes
+## Querying CI Indexes
+CI indexes are currently only hit when utilizing regular expression queries with a CI option.  For example the following query and index would go hand-in-hand.  They would match any variation of *Tom*: `'TOM'`, `'tOm'`, etc.
+
+**Query**
+```javascript
+    {
+        "field": "firstName",
+        "regex": "tom.*",
+        "options": "i"
+    }
+```
+
+**Index**
+```javascript
+    {
+        "fields": [
+            {
+                "dir": "$asc",
+                "field": "firstName",
+                "caseInsensitive": true
+            }
+        ],
+        "name": "user_firstName"
+    }
+```
 
 ## Caveats
-
-<bvulaj> mpatercz, what do you foresee being there? How to query / how to create?
-<mpatercz> bvulaj, yes. And that you may need both (cs and ci)
+There are a few other caveats to keep in mind when dealing with CI indexes.  
+1. The index will **not** be hit when using other query types (non regex) or regex queries without the case-insensitive option.
+  * This means that if you plan on dealing with case sensitive queries, or simpler query types, you should create another case sensitive index.  Though you will still need to be mindful of the limitations of that as well.
+2. If you create an array-based CI index, you **must** use the index/asterisk (`*`) placeholder.
+  * Lightblue will not know how to create the necessary mechanisms otherwise, and it will not know to use your CI index during regex queries.
