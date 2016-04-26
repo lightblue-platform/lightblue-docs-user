@@ -88,8 +88,9 @@ CI indexes are currently only hit when utilizing regular expression queries with
 ```
 
 ## Caveats
-There are a few other caveats to keep in mind when dealing with CI indexes.  
+There are a few other caveats to keep in mind when dealing with CI indexes.
+
 1. The index will **not** be hit when using other query types (non regex) or regex queries without the case-insensitive option.
-  * This means that if you plan on dealing with case sensitive queries, or simpler query types, you should create another case sensitive index.  Though you will still need to be mindful of the limitations of that as well.
+ 1. This means that if you plan on dealing with case sensitive queries, or simpler query types, you should create another case sensitive index.  Though you will still need to be mindful of the limitations of that as well.
 2. If you create an array-based CI index, you **must** use the index/asterisk (`*`) placeholder.
-  * Lightblue will not know how to create the necessary mechanisms otherwise, and it will not know to use your CI index during regex queries.
+ 1. Lightblue will not know how to create the necessary mechanisms otherwise, and it will not know to use your CI index during regex queries.
