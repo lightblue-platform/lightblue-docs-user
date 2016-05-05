@@ -94,3 +94,6 @@ There are a few other caveats to keep in mind when dealing with CI indexes.
  1. This means that if you plan on dealing with case sensitive queries, or simpler query types, you should create another case sensitive index.  Though you will still need to be mindful of the limitations of that as well.
 2. If you create an array-based CI index, you **must** use the index/asterisk (`*`) placeholder.
  1. Lightblue will not know how to create the necessary mechanisms otherwise, and it will not know to use your CI index during regex queries.
+3. When creating a new case-insensitive index, the background process required to populate necessary fields is a *long running process*.
+ 1. Depending on the size of the collection, the documents in it, the fields being updated, and the hardware in the system, the indexing can generally process between 5000 and 10000 records per minute per field. That is +/- 10 hours for a 5 million record collection.
+ 2. This process does not keep track of state, and therefore the system should be isolated for the duration of the indexing. If the reindixing is disrupted, the process will have to be restarted.
