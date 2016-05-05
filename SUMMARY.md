@@ -21,6 +21,7 @@
        * [Create a new Version](cookbook/create_a_new_version.md)
        * [Testing Multiple Versions](cookbook/testing_multiple_versions.md)
    * [Binary Data](cookbook/binary_data.md)
+   * [Case Insensitive Indexes](cookbook/case_insensitive_indexes.md)
    * [Audit Hook](cookbook/audit_hook.md)
        * [Configure Audit Hook Parser](cookbook/configure_audit_hook_parser.md)
        * [Initial Metadata](cookbook/initial_metadata.md)
