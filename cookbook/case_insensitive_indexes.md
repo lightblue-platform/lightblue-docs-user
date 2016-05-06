@@ -87,6 +87,39 @@ CI indexes are currently only hit when utilizing regular expression queries with
     }
 ```
 
+## Case Insensitive And Unique Indexes
+Case insensitive indexes that are marked with a unique constraint are unique within themselves.  For example, the following two indexes are equivelant:
+
+```
+    {
+        "fields": [
+            {
+                "field": "fieldName",
+                "dir":"$asc",
+                "caseInsensitive": true
+            },
+            ...
+        ],
+        "name": "indexName",
+        "unique": true
+    }
+```
+
+`@mongoHidden` is the prefix used for case insensitive fields in the MongoDB based instances.
+
+```
+    {
+        "fields": [
+            {
+                "field": "@mongoHidden.fieldName",
+                "dir":"$asc"            },
+            ...
+        ],
+        "name": "indexName",
+        "unique": true
+    }
+```
+
 ## Caveats
 There are a few other caveats to keep in mind when dealing with CI indexes.
 
