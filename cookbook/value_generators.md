@@ -85,9 +85,7 @@ Update:
                 "type": "date",
                 "valueGenerator": {
                     "type": "CurrentTime",
-                    "configuration": {
-                        "overwrite": true
-                    }
+                    "overwrite": true
                 }
             }
 ```
