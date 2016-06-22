@@ -4,7 +4,7 @@ If you want Lightblue to automatically populate fields (e.g. generate id or curr
 * if a field is not in the document and is not required, it won't be automatically populated,
 * if a field is required and it is not in the document, it'll be inserted and automatically populated,
 * if a field is set to null, it will be automatically populated (even if not required),
-* if overwrite configuration flag is set to true on the value generator, field will be populated even if it is initialized (already has a value). It will not be inserted if the field is not required and if the field does not exist in the document.
+* if overwrite configuration flag is set to true on the value generator, field will be populated with a generated value even if it is initialized (already has a value) and even if it's set in the request. It will not be inserted if the field is not required and if the field does not exist in the document.
 
 Note: Value Generators are available since Lightblue version 1.7.0.
 
