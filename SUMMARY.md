@@ -13,6 +13,7 @@
    * [JSON Style Guide](standards/style_guide.md)
 * [Cookbook](cookbook/README.md)
    * [Value Generators](cookbook/value_generators.md)
+   * [Enums](cookbook/enums.md)
    * [Quickstart](cookbook/quickstart.md)
        * [Install on OpenShift](cookbook/install_lightblue_on_openshift.md)
        * [Create Metadata](cookbook/create_first_metadata.md)
