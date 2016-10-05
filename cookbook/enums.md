@@ -6,7 +6,7 @@ Considering the above, you have 2 options when designing model classes in a lang
 * don't use enum type, i.e. define enum metadata fields as strings in the model classes or
 * implement enum types which support unknowns.
 
-An example of a java enum with pojo2java nad java2pojo conversion support for the unknowns:
+An example of a java enum with pojo2java and java2pojo conversion support for one unknown (TODO: figure out something better):
 
 ```java
 public enum EnumType {
@@ -48,4 +48,4 @@ public enum EnumType {
         }
 ```
 
-This implementation allows you to read an object with an unknown enum value from Lightblue and then save it back, without sacrificing type safty for known values.
+This implementation allows you to read an object with an unknown enum value from Lightblue and then save it back, without sacrificing type safety for known values.
