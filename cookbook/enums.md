@@ -6,46 +6,27 @@ Considering the above, you have 2 options when designing model classes in a lang
 * don't use enum type, i.e. define enum metadata fields as strings in the model classes or
 * implement enum types which support unknowns.
 
-An example of a java enum with pojo2java and java2pojo conversion support for one unknown (TODO: figure out something better):
+An example of a java enum with unknown support:
 
 ```java
-public enum EnumType {
-            enum1,
-            enum2,
-//          (...)
-            unknown;
+    public static enum EnumType {
+        enum1,
+        enum2,
+//      (...)
+        _unknown;
 
-            private String value;
+        private static final Log log = LogFactory.getLog(EnumType.class);
 
-            private EnumType() {
-                this.value = name();
+        @JsonCreator
+        public static EnumType fromValue(String value) {
+            try {
+                return EnumType.valueOf(value);
+            } catch (Exception e) {
+                log.warn("Unrecognized enum "+value+", using unknown", e);
+                return EnumType._unknown;
             }
-
-            public static EnumType createUnknown(String value) {
-                EnumType t = EnumType.unknown;
-                t.value = value;
-                return t;
-            }
-
-            @JsonCreator
-            public static EnumType fromValue(String value) {
-
-                for (EnumType e : values()) {
-                    if (value.equals(e.value)) {
-                        return e;
-                    }
-                }
-
-                // unknown enum
-                return createUnknown(value);
-            }
-
-            @JsonValue
-            public String toValue() {
-                return value;
-            }
-
         }
+    }
 ```
 
-This implementation allows you to read an object with an unknown enum value from Lightblue and then save it back, without sacrificing type safety for known values.
+NOTE: This implementation allows you to read an object with an unknown enum value from Lightblue, but does not allow you to save it back. The string type solution does not have this limitation, but lacks type safety.
