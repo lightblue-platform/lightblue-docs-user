@@ -101,3 +101,39 @@ Or:
    cli.data(request);
 ```
 If the update fails, the server will return concurrent update error.
+
+## Embedding result metadata into documents
+
+It is possible to embed result metadata into result documents with
+metadata declarations. This is achieved using two metadata properties
+in field definitions:
+
+```
+{
+  ...
+  "fields": {
+     "resultMetadataField": {
+         "type":"any",
+         "resultMetadata":true
+     },
+     "documentVersionField": {
+         "type":"string",
+         "documentVersion":true
+     }
+  }
+}
+```
+
+In the above metadata definition 'resultMetadataField' will receive
+the result metadata object, and 'documentVersionField' will receive
+the document version string. These fields are not persisted, but
+populated after the document is retrieved. There may be any number of
+metadata or version fields in a document, and the field name can be
+arbitrary. Searching against these fields is not supported. They need
+to be projected to be returned.
+
+During a save operation, if the document contains a document version
+or result metadata field with a document version in it, and if the
+updateIfCurrent flag is set, then the version given in the document
+will be checked agains the database document version.
+
