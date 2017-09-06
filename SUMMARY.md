@@ -35,6 +35,7 @@
    * [Controlling Read Preferences](cookbook/controlling_read_preferences.md)
 * [Tuning](tuning/README.md)
    * [MongoDB](tuning/mongodb.md)
+   * [Limits](tuning/limits.md)
 * [Security](security/README.md)
    * [Unsecured Deployment](security/unsecured.md)
    * [Encryption](security/encryption.md)
