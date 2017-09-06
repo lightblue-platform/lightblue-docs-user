@@ -14,6 +14,6 @@ To limit the allowed response size, define maxResultSetSizeForReadsB in lightblu
 
 When client exceeds the read limit (maxResultSetSizeForReadsB), an error is returned: _crud:ResultSizeTooLarge_. No results are returned.
 
-When client exceeds the write limit (maxResultSetSizeForWritesB), either _crud:ResultSizeTooLarge_ or _mongo-crud:ResultSizeTooLarge_ is returned. No results are returned, **however, the update operation was partially successful. You cannot make any assumptions on what was or wasn't updated.**. Lightblue processes updates in batches of 64. It will process all batches up to a point where it exceeded the limit and stop, leaving all remaining batches unprocessed and skipping hook processing phase (if there are any hooks defined), potentially leading to more inconsistency.
+When client exceeds the write limit (maxResultSetSizeForWritesB), either _crud:ResultSizeTooLarge_ or _mongo-crud:ResultSizeTooLarge_ is returned. No results are returned, **however, the update operation was partially successful. You cannot make any assumptions on what was or wasn't updated.**. Lightblue processes updates in batches (64 documents by default). It will process all batches up to a point where it exceeded the limit and stop, leaving all remaining batches unprocessed and skipping hook processing phase (if there are any hooks defined), potentially leading to more inconsistency.
 
 Considering the above, set maxResultSetSizeForWritesB as high as possible without compromising the availability of the environment. 
