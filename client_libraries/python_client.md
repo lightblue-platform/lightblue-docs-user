@@ -1,5 +1,5 @@
-# Python Client
+# Python-lightblue
 
-Source: https://github.com/ashcrow/bluesnake
+Source: https://github.com/Allda/python-lightblue
 
-A python based client for lightblue.  Looks like a start to a client, but maybe not usable yet.  I would expect this to change when there is a strong need for a python client!
+Python library for Lightblue API. It can be used to insert, update, delete and find data in database. It has several layers of abstraction. See readme in GitHub.
